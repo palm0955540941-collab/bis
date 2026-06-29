@@ -82,15 +82,13 @@ function closeMobileMenu() {
   if (overlay) { overlay.remove(); document.body.style.overflow = ''; }
 }
 
-function showPage(page, event) {
-  if (event) event.preventDefault();
+function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const el = document.getElementById('page-' + page);
   if (el) el.classList.add('active');
   closeMobileMenu();
   if (page === 'homework') showHwSubjects();
   if (page === 'drinks') renderDrinks();
-  return false;
 }
 
 function toggleMobileMenu() {
