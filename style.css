@@ -14,7 +14,7 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 160;
   border-bottom: 1px solid #2a2a2a;
 }
 
