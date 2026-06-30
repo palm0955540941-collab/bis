@@ -1,4 +1,4 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
   font-family: 'Kanit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -25,6 +25,7 @@ body {
   align-items: center;
   justify-content: space-between;
   height: 64px;
+  position: relative;
 }
 
 .nav-logo {
@@ -64,6 +65,77 @@ body {
 .nav-links a.active {
   color: #ffd700;
   background: rgba(255,215,0,0.1);
+}
+
+/* ──────────── Hamburger ──────────── */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 170;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #999;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-toggle.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: #0d0d0d;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 8px 20px 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    gap: 2px;
+    z-index: 160;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 14px 16px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    border-radius: 10px;
+  }
 }
 
 .container {
@@ -543,7 +615,14 @@ body {
 
 @media (max-width: 600px) {
   .chamber { width: 48px; height: 48px; font-size: 1.2rem; }
-  .revolver { gap: 8px; padding: 16px 10px; }
+  .chamber.active { transform: scale(1.06); }
+  .revolver { gap: 8px; padding: 16px; }
+}
+
+@media (max-width: 480px) {
+  .revolver { max-width: 180px; flex-wrap: wrap; gap: 10px; padding: 14px; }
+  .chamber { width: 48px; height: 48px; }
+  .chamber.active { transform: scale(1.05); }
 }
 
 .game-status {
@@ -602,3 +681,49 @@ body {
 .log-entry .log-player { color: #ffd700; font-weight: 600; }
 .log-entry .log-result-hit { color: #ff4444; }
 .log-entry .log-result-safe { color: #00cc00; }
+
+/* ──────────── Touch Active ──────────── */
+.add-btn:active { transform: scale(0.94); }
+.ctrl-btn:active:not(:disabled) { transform: scale(0.96) !important; }
+.hw-subj-btn:active { transform: scale(0.97); }
+.hw-back:active { transform: scale(0.94); }
+.player-item .remove-btn:active { background: #6a0000; }
+.bullet-btn:active { border-color: #ffd700; }
+
+/* ──────────── Small Mobile ──────────── */
+@media (max-width: 400px) {
+  .section-title { font-size: 1.2rem; letter-spacing: 1px; }
+  .section-line { margin-bottom: 16px; }
+  .container { padding: 12px 10px; }
+
+  .nav-links a { font-size: 0.88rem; padding: 12px 14px; }
+
+  .ctrl-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .hw-card { padding: 12px 14px; }
+  .hw-task { font-size: 0.88rem; }
+  .hw-subj-btn { padding: 20px 12px; }
+  .hw-subj-icon { font-size: 2rem; }
+  .hw-subj-name { font-size: 0.9rem; }
+
+  .chamber { width: 40px; height: 40px; font-size: 1rem; border-width: 2px; }
+  .revolver { max-width: 144px; gap: 8px; padding: 10px; }
+
+  .current-player { font-size: 1.1rem; padding: 10px; }
+  .game-status.hit, .game-status.safe { font-size: 1.2rem; }
+  .players-panel { padding: 16px; }
+  .game-panel { padding: 20px 16px; }
+  .game-log { padding: 16px; }
+
+  .bullet-btn { width: 34px; height: 34px; font-size: 0.8rem; }
+
+  .sch-tbl td { padding: 4px 2px; font-size: 0.6rem; }
+  .sch-subj { font-size: 0.55rem; padding: 3px 4px; }
+  .sch-day { font-size: 0.6rem !important; width: 36px; }
+  .sch-tbl th { padding: 4px 2px; font-size: 0.65rem; }
+  .sch-tbl thead th:not(:first-child) { font-size: 0.65rem; padding: 6px 2px; }
+}

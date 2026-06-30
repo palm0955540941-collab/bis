@@ -16,6 +16,11 @@
     <a href="index.html" class="nav-logo">
       <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
     </a>
+    <button class="nav-toggle" aria-label="เปิดเมนู">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <div class="nav-links">
       <a href="index.html">หน้าแรก</a>
       <a href="schedule.html" class="active">ตารางสอน</a>
@@ -88,5 +93,20 @@
   </div>
 </div>
 
+<script>
+document.querySelector('.nav-toggle').addEventListener('click', function() {
+  const nav = document.querySelector('.nav-links');
+  nav.classList.toggle('open');
+  this.classList.toggle('active');
+  this.setAttribute('aria-expanded', nav.classList.contains('open'));
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.querySelector('.nav-toggle').classList.remove('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+  });
+});
+</script>
 </body>
 </html>
