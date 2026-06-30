@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คำนวณเกรด - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <button class="nav-toggle" aria-label="เปิดเมนู">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
+      <a href="gpa.html" class="active">คำนวณเกรด</a>
+      <a href="games.html">เกมดริ้ง</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="section-title">📊 คำนวณเกรดเฉลี่ย</h1>
+  <div class="section-line"></div>
+
+  <div class="gpa-panel">
+    <div class="gpa-result" id="gpaResult">
+      <div class="gpa-label">เกรดเฉลี่ย (GPA)</div>
+      <div class="gpa-value" id="gpaValue">0.00</div>
+      <div class="gpa-total" id="gpaTotal">หน่วยกิตทั้งหมด: 0</div>
+    </div>
+
+    <div class="gpa-header">
+      <span>วิชา</span>
+      <span>หน่วยกิต</span>
+      <span>เกรด</span>
+      <span></span>
+    </div>
+    <div id="gpaRows"></div>
+
+    <div class="gpa-actions">
+      <button class="gpa-btn gpa-btn-add" onclick="addRow()">➕ เพิ่มวิชา</button>
+      <button class="gpa-btn gpa-btn-calc" onclick="calculate()">🧮 คำนวณ</button>
+      <button class="gpa-btn gpa-btn-reset" onclick="resetAll()">🗑️ เคลียร์ทั้งหมด</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const gradeMap = { 'A': 4, 'B+': 3.5, 'B': 3, 'C+': 2.5, 'C': 2, 'D+': 1.5, 'D': 1, 'F': 0 };
+const creditList = [0.5, 1, 1.5, 2, 2.5, 3, 4];
+let rowId = 0;
+
+function addRow(subject = '', credit = '3', grade = 'A') {
+  rowId++;
+  const container = document.getElementById('gpaRows');
+  const row = document.createElement('div');
+  row.className = 'gpa-row';
+  row.dataset.id = rowId;
+  row.innerHTML = `
+    <input type="text" class="gpa-subject" placeholder="ชื่อวิชา" value="${subject}">
+    <select class="gpa-credit">${creditList.map(c => `<option value="${c}"${c == credit ? ' selected' : ''}>${c}</option>`).join('')}</select>
+    <select class="gpa-grade">${Object.keys(gradeMap).map(g => `<option value="${g}"${g === grade ? ' selected' : ''}>${g}</option>`).join('')}</select>
+    <button class="gpa-remove" onclick="removeRow(this)" title="ลบวิชานี้">✕</button>
+  `;
+  container.appendChild(row);
+}
+
+function removeRow(btn) {
+  btn.closest('.gpa-row').remove();
+  document.getElementById('gpaValue').textContent = '0.00';
+  document.getElementById('gpaTotal').textContent = 'หน่วยกิตทั้งหมด: 0';
+}
+
+function calculate() {
+  const rows = document.querySelectorAll('#gpaRows .gpa-row');
+  let totalPoints = 0;
+  let totalCredits = 0;
+
+  rows.forEach(row => {
+    const credit = parseFloat(row.querySelector('.gpa-credit').value);
+    const grade = row.querySelector('.gpa-grade').value;
+    totalPoints += credit * gradeMap[grade];
+    totalCredits += credit;
+  });
+
+  const gpa = totalCredits > 0 ? totalPoints / totalCredits : 0;
+  document.getElementById('gpaValue').textContent = gpa.toFixed(2);
+  document.getElementById('gpaTotal').textContent = `หน่วยกิตทั้งหมด: ${totalCredits.toFixed(1)}`;
+}
+
+function resetAll() {
+  document.getElementById('gpaRows').innerHTML = '';
+  rowId = 0;
+  addRow();
+  document.getElementById('gpaValue').textContent = '0.00';
+  document.getElementById('gpaTotal').textContent = 'หน่วยกิตทั้งหมด: 0';
+}
+
+document.querySelector('.nav-toggle').addEventListener('click', function() {
+  const nav = document.querySelector('.nav-links');
+  nav.classList.toggle('open');
+  this.classList.toggle('active');
+  this.setAttribute('aria-expanded', nav.classList.contains('open'));
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.querySelector('.nav-toggle').classList.remove('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+  });
+});
+
+addRow();
+</script>
+
+</body>
+</html>
