@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เกมดริ้ง - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
+      <a href="games.html" class="active">เกมดริ้ง</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="section-title">🎲 เกมดริ้ง</h1>
+  <div class="section-line"></div>
+
+  <div class="game-tabs">
+    <button class="game-tab active">🔫 รัสเซียนรูเล็ต</button>
+    <button class="game-tab disabled">🎯 เกมอื่น (เร็วๆ นี้)</button>
+  </div>
+
+  <div class="game-layout">
+    <div class="players-panel">
+      <div class="panel-title">👥 ผู้เล่น</div>
+      <div class="player-input-row">
+        <input type="text" id="playerInput" placeholder="ชื่อผู้เล่น..." autocomplete="off">
+        <button class="add-btn" onclick="addPlayer()">เพิ่ม</button>
+      </div>
+      <div class="player-list" id="playerList">
+        <div class="empty-msg">ยังไม่มีผู้เล่น</div>
+      </div>
+    </div>
+
+    <div class="game-panel">
+      <div class="current-player" id="currentPlayer">👤 เพิ่มผู้เล่นก่อนเริ่ม</div>
+
+      <div class="bullet-select">
+        <span class="bullet-label">💥 กระสุน:</span>
+        <div class="bullet-options" id="bulletOptions">
+          <button class="bullet-btn active" data-count="1">1</button>
+          <button class="bullet-btn" data-count="2">2</button>
+          <button class="bullet-btn" data-count="3">3</button>
+          <button class="bullet-btn" data-count="4">4</button>
+          <button class="bullet-btn" data-count="5">5</button>
+          <button class="bullet-btn" data-count="6">6</button>
+        </div>
+      </div>
+
+      <div class="revolver-wrap">
+        <div class="revolver" id="revolver">
+          <div class="chamber" data-index="0"></div>
+          <div class="chamber" data-index="1"></div>
+          <div class="chamber" data-index="2"></div>
+          <div class="chamber" data-index="3"></div>
+          <div class="chamber" data-index="4"></div>
+          <div class="chamber" data-index="5"></div>
+        </div>
+      </div>
+
+      <div class="game-status" id="gameStatus">🔄 กรุณาเพิ่มผู้เล่น</div>
+
+      <div class="game-controls">
+        <button class="ctrl-btn spin-btn" onclick="spin()" id="spinBtn">🔄 หมุนลำกล้อง</button>
+        <button class="ctrl-btn fire-btn" onclick="fire()" id="fireBtn">🔫 ยิง!</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="game-log">
+    <div class="log-title">📜 ประวัติการเล่น</div>
+    <div id="logList" class="log-list">
+      <div class="empty-msg">ยังไม่มีประวัติ</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const G = {
+  players: [],
+  currentIdx: 0,
+  chambers: [false, false, false, false, false, false],
+  chamberPos: 0,
+  bulletCount: 1,
+  canFire: false,
+  isAnim: false,
+  log: []
+};
+
+function addPlayer() {
+  const input = document.getElementById('playerInput');
+  const name = input.value.trim();
+  if (!name) return;
+  if (G.players.includes(name)) return;
+  G.players.push(name);
+  input.value = '';
+  input.focus();
+  resetRound();
+  render();
+}
+
+function removePlayer(i) {
+  G.players.splice(i, 1);
+  if (G.players.length === 0) {
+    G.currentIdx = 0;
+    G.canFire = false;
+  } else if (G.currentIdx >= G.players.length) {
+    G.currentIdx = 0;
+  } else if (i < G.currentIdx) {
+    G.currentIdx--;
+  }
+  resetRound();
+  render();
+}
+
+function resetRound() {
+  G.chambers = [false, false, false, false, false, false];
+  G.chamberPos = 0;
+  G.canFire = false;
+  G.isAnim = false;
+  document.querySelectorAll('.chamber').forEach(ch => {
+    ch.classList.remove('active', 'hit', 'safe');
+    ch.textContent = '';
+  });
+}
+
+function selectBullets(n) {
+  G.bulletCount = n;
+  document.querySelectorAll('.bullet-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.count) === n);
+  });
+}
+
+function spin() {
+  if (G.players.length < 2) {
+    setStatus('⚠️ ต้องมีผู้เล่นอย่างน้อย 2 คน', '');
+    return;
+  }
+  if (G.isAnim) return;
+
+  G.chambers = [false, false, false, false, false, false];
+  let placed = 0;
+  while (placed < G.bulletCount) {
+    const idx = Math.floor(Math.random() * 6);
+    if (!G.chambers[idx]) { G.chambers[idx] = true; placed++; }
+  }
+
+  G.chamberPos = Math.floor(Math.random() * 6);
+  G.canFire = true;
+
+  document.getElementById('revolver').classList.add('spinning');
+  setTimeout(() => {
+    document.getElementById('revolver').classList.remove('spinning');
+  }, 500);
+
+  render();
+  setStatus(`🔫 พร้อมยิง! กด 🔫 ยิง!`, '');
+}
+
+function fire() {
+  if (!G.canFire) { setStatus('⚠️ หมุนลำกล้องก่อนยิง!', ''); return; }
+  if (G.players.length < 2) return;
+  if (G.isAnim) return;
+
+  G.isAnim = true;
+  const hit = G.chambers[G.chamberPos];
+  const player = G.players[G.currentIdx];
+
+  document.getElementById('revolver').classList.add('firing');
+  setTimeout(() => {
+    document.getElementById('revolver').classList.remove('firing');
+  }, 300);
+
+  G.log.unshift({ player, hit });
+  if (G.log.length > 50) G.log.pop();
+
+  document.querySelectorAll('.chamber').forEach((ch, i) => {
+    ch.classList.remove('active');
+    if (i === G.chamberPos) {
+      ch.classList.add(hit ? 'hit' : 'safe');
+      ch.textContent = hit ? '🍺' : '✅';
+    }
+  });
+
+  if (hit) {
+    setStatus(`💥 ${player} โดน! ดื่ม! 🍻`, 'hit');
+  } else {
+    setStatus(`✅ ${player} รอดเก่ง!`, 'safe');
+  }
+
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('fireBtn').disabled = true;
+
+  renderLog();
+
+  setTimeout(() => {
+    G.chamberPos = (G.chamberPos + 1) % 6;
+    G.canFire = false;
+    G.isAnim = false;
+
+    document.querySelectorAll('.chamber').forEach(ch => {
+      ch.classList.remove('hit', 'safe');
+      ch.textContent = '';
+    });
+
+    G.currentIdx = (G.currentIdx + 1) % G.players.length;
+    document.getElementById('spinBtn').disabled = false;
+    render();
+    setStatus(`🔄 ผลัด ${G.players[G.currentIdx]} กดหมุนลำกล้อง`, '');
+  }, 2800);
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('gameStatus');
+  el.textContent = msg;
+  el.className = 'game-status' + (type ? ' ' + type : '');
+}
+
+function render() {
+  const list = document.getElementById('playerList');
+  if (G.players.length === 0) {
+    list.innerHTML = '<div class="empty-msg">ยังไม่มีผู้เล่น</div>';
+  } else {
+    list.innerHTML = G.players.map((p, i) => `
+      <div class="player-item${i === G.currentIdx ? ' current' : ''}">
+        <span class="name">${i === G.currentIdx ? '🔫 ' : ''}${p}</span>
+        <button class="remove-btn" onclick="removePlayer(${i})">✕</button>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('currentPlayer').textContent =
+    G.players.length < 2
+      ? '👤 เพิ่มผู้เล่นอย่างน้อย 2 คน'
+      : `🎯 ตาของ: ${G.players[G.currentIdx]}`;
+
+  document.querySelectorAll('.chamber').forEach((ch, i) => {
+    ch.classList.remove('active');
+    ch.textContent = '';
+    if (G.canFire && i === G.chamberPos) {
+      ch.classList.add('active');
+    }
+  });
+
+  document.getElementById('spinBtn').disabled = G.players.length < 2 || G.isAnim;
+  document.getElementById('fireBtn').disabled = !G.canFire || G.isAnim;
+
+  renderLog();
+}
+
+function renderLog() {
+  const el = document.getElementById('logList');
+  if (G.log.length === 0) {
+    el.innerHTML = '<div class="empty-msg">ยังไม่มีประวัติ</div>';
+    return;
+  }
+  el.innerHTML = G.log.map(e => `
+    <div class="log-entry">
+      <span class="log-player">${e.player}</span>
+      <span>→</span>
+      <span class="${e.hit ? 'log-result-hit' : 'log-result-safe'}">
+        ${e.hit ? '💥 โดน! ดื่ม! 🍻' : '✅ รอด!'}
+      </span>
+    </div>
+  `).join('');
+}
+
+document.getElementById('playerInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addPlayer();
+});
+
+document.getElementById('bulletOptions').addEventListener('click', e => {
+  const btn = e.target.closest('.bullet-btn');
+  if (btn) selectBullets(parseInt(btn.dataset.count));
+});
+
+render();
+</script>
+
+</body>
+</html>
