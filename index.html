@@ -13,72 +13,32 @@
 
 <nav class="navbar">
   <div class="nav-container">
-    <a href="#" class="nav-logo" onclick="showPage('home')">
+    <a href="index.html" class="nav-logo">
       <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
     </a>
     <div class="nav-links">
-      <a href="javascript:void(0)" onclick="showPage('home')">หน้าแรก</a>
-      <a href="javascript:void(0)" onclick="showPage('schedule')">ตารางสอน</a>
-      <a href="javascript:void(0)" onclick="showPage('homework')">การบ้าน</a>
-      <a href="javascript:void(0)" onclick="showPage('drinks')">เกมดริ้ง</a>
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
     </div>
-    <button class="mobile-menu" onclick="toggleMobileMenu()">☰</button>
   </div>
 </nav>
 
 <div class="container">
-
-  <!-- Home Page -->
-  <div id="page-home" class="page active">
-    <section class="hero">
-      <div class="hero-logo-wrap">
-        <img src="images/hkd3.png" alt="HOKKADEE" class="hero-logo">
-      </div>
-      <h1 class="hero-title">HOKKADEE</h1>
-      <p class="hero-sub">สายดริ้ง สายปาร์ตี้ รวมพลคนมันส์</p>
-      <p class="hero-desc">ทุกคนมีเอกลักษณ์เฉพาะตัว แต่เรามารวมกันด้วยมิตรภาพและความสนุก</p>
-    </section>
-    <section class="about">
-      <h2>ABOUT US</h2>
-      <div class="about-line"></div>
-      <p>กลุ่มเพื่อนที่รู้จักกันจากการเรียน ใช้เวลาด้วยกันทั้งตอนเรียน เที่ยว กิน ดริ้ง และทำกิจกรรมต่างๆ ไม่ว่าจะกลางวันหรือกลางคืน เราคือ HOKKADEE</p>
-    </section>
-  </div>
-
-  <!-- Schedule Page -->
-  <div id="page-schedule" class="page">
-    <h1 class="section-title">ตารางสอน</h1>
-    <div class="section-line"></div>
-    <div class="schedule-table-wrap">
-      <table class="sch-tbl" id="sch-tbl">
-        <thead id="sch-head"></thead>
-        <tbody id="sch-body"></tbody>
-      </table>
+  <section class="hero">
+    <div class="hero-logo-wrap">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="hero-logo">
     </div>
-  </div>
-
-  <!-- Homework Page -->
-  <div id="page-homework" class="page">
-    <div id="hw-subject-view">
-      <h1 class="section-title">การบ้าน</h1>
-      <div class="section-line"></div>
-      <p class="hw-hint">เลือกวิชาเพื่อดูการบ้าน</p>
-      <div class="hw-subj-grid" id="hw-subj-grid"></div>
-    </div>
-    <div id="hw-detail-view" style="display:none">
-      <button class="hw-back" onclick="showHwSubjects()">← กลับ</button>
-      <h1 class="section-title" id="hw-detail-title">การบ้าน</h1>
-      <div class="section-line"></div>
-      <div id="hw-list"></div>
-    </div>
-  </div>
-
-  <!-- Drinks Page -->
-  <div id="page-drinks" class="page">
-    <div class="drink-btn-grid" id="drink-btn-grid"></div>
-  </div>
+    <h1 class="hero-title">HOKKADEE</h1>
+    <p class="hero-sub">สายดริ้ง สายปาร์ตี้ รวมพลคนมันส์</p>
+    <p class="hero-desc">ทุกคนมีเอกลักษณ์เฉพาะตัว แต่เรามารวมกันด้วยมิตรภาพและความสนุก</p>
+  </section>
+  <section class="about">
+    <h2>ABOUT US</h2>
+    <div class="about-line"></div>
+    <p>กลุ่มเพื่อนที่รู้จักกันจากการเรียน ใช้เวลาด้วยกันทั้งตอนเรียน เที่ยว กิน ดริ้ง และทำกิจกรรมต่างๆ ไม่ว่าจะกลางวันหรือกลางคืน เราคือ HOKKADEE</p>
+  </section>
 </div>
 
-<script src="app.js"></script>
 </body>
 </html>

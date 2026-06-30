@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>การบ้าน - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html" class="active">การบ้าน</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div id="hw-subject-view">
+    <h1 class="section-title">การบ้าน</h1>
+    <div class="section-line"></div>
+    <p class="hw-hint">เลือกวิชาเพื่อดูการบ้าน</p>
+    <div class="hw-subj-grid" id="hw-subj-grid"></div>
+
+  </div>
+
+  <div id="hw-detail-view" style="display:none">
+    <button class="hw-back" onclick="showHwSubjects()">← กลับ</button>
+    <h1 class="section-title" id="hw-detail-title">การบ้าน</h1>
+    <div class="section-line"></div>
+    <div id="hw-list"></div>
+  </div>
+</div>
+
+<script>
+const hwIcons = {
+  'เขียนโปรแกรมแบบวิชวล': '💻',
+  'ออกแบบ UX/UI': '🎨',
+  'เขียนโปรแกรมเชิงวัตถุ': '🧩',
+  'จัดการเชิงกลยุทธ์': '📊',
+  'วิเคราะห์และออกแบบระบบ': '📋',
+  'สื่อสารข้อมูลธุรกิจ': '🌐',
+};
+
+const seedData = [
+  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'รองาน', due: 'รองาน', done: false },
+  { id: 2, subj: 'ออกแบบ UX/UI', task: 'รองาน', due: 'รองาน', done: false },
+  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'รองาน', due: 'รองาน', done: false },
+  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'รองาน', due: 'รองาน', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'แบบฝึกหัดท้ายบทที่ 1', due: '29 มิ.ค. 69', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'งานกลุ่มภายในห้อง', due: '29 มิ.ค. 69', done: false },
+
+  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'รองาน', due: 'รองาน', done: false },
+];
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  if (!dateStr.includes('-')) return dateStr;
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d)) return dateStr;
+  const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
+}
+
+function renderSubjects() {
+  const homework = seedData;
+  const subjects = Object.keys(hwIcons);
+  const grid = document.getElementById('hw-subj-grid');
+  grid.innerHTML = subjects.map(s => {
+    const items = homework.filter(h => h.subj === s);
+    return `
+      <div class="hw-subj-btn" onclick="showHwDetail('${s}')">
+        <div class="hw-subj-icon">${hwIcons[s] || '📚'}</div>
+        <div class="hw-subj-name">${s}</div>
+        <div class="hw-subj-count">${items.length} งาน</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function showHwDetail(subj) {
+  document.getElementById('hw-subject-view').style.display = 'none';
+  document.getElementById('hw-detail-view').style.display = 'block';
+  document.getElementById('hw-detail-title').textContent = subj;
+  renderHwList(subj);
+}
+
+function showHwSubjects() {
+  document.getElementById('hw-subject-view').style.display = 'block';
+  document.getElementById('hw-detail-view').style.display = 'none';
+}
+
+function renderHwList(subj) {
+  const items = seedData.filter(h => h.subj === subj);
+  const list = document.getElementById('hw-list');
+  list.innerHTML = items.map(h => `
+    <div class="hw-card">
+      <div class="hw-task">${h.task}</div>
+      <div class="hw-foot">
+        <span class="hw-due">📅 ${formatDate(h.due)}</span>
+      </div>
+    </div>
+  `).join('');
+  if (items.length === 0) {
+    list.innerHTML = '<p style="text-align:center;color:#666;padding:40px">ไม่มีการบ้านในวิชานี้</p>';
+  }
+}
+
+renderSubjects();
+</script>
+
+<style>
+.hw-back {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #0a0a0a;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 16px;
+}
+.hw-back:hover {
+  transform: translateX(-4px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+</style>
+
+</body>
+</html>

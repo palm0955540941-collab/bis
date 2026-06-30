@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ตารางสอน - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html" class="active">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="section-title">ตารางสอน</h1>
+  <div class="section-line"></div>
+  <div class="schedule-table-wrap">
+    <table class="sch-tbl">
+      <thead>
+        <tr>
+          <th>วัน</th>
+          <th colspan="8">เช้า</th>
+          <th colspan="2">พักเที่ยง</th>
+          <th colspan="8">บ่าย</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sch-day">จันทร์</td>
+          <td colspan="8"></td>
+          <td colspan="2"></td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">วิเคราะห์และออกแบบระบบ<span class="sch-room">บธ.1-402</span></span>
+          </td>
+        </tr>
+        <tr>
+          <td class="sch-day">อังคาร</td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">เขียนโปรแกรมแบบวิชวล<span class="sch-room">บธ.2-401</span></span>
+          </td>
+          <td colspan="2"></td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">เขียนโปรแกรมเชิงวัตถุ<span class="sch-room">บธ.2-302</span></span>
+          </td>
+        </tr>
+        <tr>
+          <td class="sch-day">พุธ</td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">ออกแบบ UX/UI<span class="sch-room">บธ.2-302</span></span>
+          </td>
+          <td colspan="2"></td>
+          <td colspan="8"></td>
+        </tr>
+        <tr>
+          <td class="sch-day">พฤหัสบดี</td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">สื่อสารข้อมูลธุรกิจ<span class="sch-room">บธ.2-301</span></span>
+          </td>
+          <td colspan="2"></td>
+          <td colspan="8"></td>
+        </tr>
+        <tr>
+          <td class="sch-day">ศุกร์</td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">จัดการเชิงกลยุทธ์<span class="sch-room">บธ.1-502</span></span>
+          </td>
+          <td colspan="2"></td>
+          <td colspan="8" class="sch-filled">
+            <span class="sch-subj">จัดกระบวนการธุรกิจ<span class="sch-room">บธ.3-505</span></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

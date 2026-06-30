@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>จัดการการบ้าน - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
+      <a href="homework-manage.html" class="active">จัดการการบ้าน</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="section-title">📝 จัดการการบ้าน</h1>
+  <div class="section-line"></div>
+
+  <!-- Search / Filter -->
+  <div class="hm-toolbar">
+    <input class="hm-input hm-search" id="hmSearch" placeholder="ค้นหาการบ้าน..." oninput="renderTable()">
+    <select class="hm-input hm-filter" id="hmFilter" onchange="renderTable()">
+      <option value="all">ทั้งหมด</option>
+      <option value="pending">ยังไม่เสร็จ</option>
+      <option value="done">เสร็จแล้ว</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="hm-table-wrap">
+    <table class="hm-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>วิชา</th>
+          <th>การบ้าน</th>
+          <th>กำหนดส่ง</th>
+          <th>สถานะ</th>
+          <th>จัดการ</th>
+        </tr>
+      </thead>
+      <tbody id="hmBody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'hokkadee_homework';
+
+const hwIcons = {
+  'เขียนโปรแกรมแบบวิชวล': '💻',
+  'ออกแบบ UX/UI': '🎨',
+  'เขียนโปรแกรมเชิงวัตถุ': '🧩',
+  'จัดการเชิงกลยุทธ์': '📊',
+  'วิเคราะห์และออกแบบระบบ': '📋',
+  'สื่อสารข้อมูลธุรกิจ': '🌐',
+};
+
+const seedData = [
+  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', due: '12 ก.ค. 69', done: false },
+  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', due: '15 ก.ค. 69', done: false },
+  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', due: '18 ก.ค. 69', done: false },
+  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', due: '20 ก.ค. 69', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', due: '22 ก.ค. 69', done: false },
+  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', due: '25 ก.ค. 69', done: false },
+];
+
+function loadHomework() {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) return JSON.parse(stored);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
+  return seedData;
+}
+
+function saveHomework(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T00:00:00');
+  if (isNaN(d)) return dateStr;
+  const days = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+  const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
+}
+
+function toggleDone(id) {
+  const data = loadHomework();
+  const item = data.find(h => h.id === id);
+  if (item) item.done = !item.done;
+  saveHomework(data);
+  renderTable();
+}
+
+function deleteHomework(id) {
+  if (!confirm('ลบการบ้านนี้?')) return;
+  let data = loadHomework();
+  data = data.filter(h => h.id !== id);
+  saveHomework(data);
+  renderTable();
+}
+
+function editHomework(id) {
+  const data = loadHomework();
+  const item = data.find(h => h.id === id);
+  if (!item) return;
+
+  const newTask = prompt('แก้ไขชื่อการบ้าน:', item.task);
+  if (newTask === null) return;
+  const trimmed = newTask.trim();
+  if (!trimmed) { alert('ชื่อการบ้านห้ามว่าง'); return; }
+
+  item.task = trimmed;
+  saveHomework(data);
+  renderTable();
+}
+
+function renderTable() {
+  const data = loadHomework();
+  const search = (document.getElementById('hmSearch').value || '').toLowerCase();
+  const filter = document.getElementById('hmFilter').value;
+
+  let filtered = data.filter(h => {
+    if (filter === 'pending' && h.done) return false;
+    if (filter === 'done' && !h.done) return false;
+    if (search && !h.task.toLowerCase().includes(search) && !h.subj.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const tbody = document.getElementById('hmBody');
+  tbody.innerHTML = filtered.map((h, i) => `
+    <tr class="${h.done ? 'hm-row-done' : ''}">
+      <td>${i + 1}</td>
+      <td>${hwIcons[h.subj] || '📚'} ${h.subj}</td>
+      <td>${h.task}</td>
+      <td>📅 ${formatDate(h.due)}</td>
+      <td>
+        <span class="hm-status ${h.done ? 'hm-status-done' : 'hm-status-pending'}">
+          ${h.done ? '✅ เสร็จ' : '⏳ รอส่ง'}
+        </span>
+      </td>
+      <td class="hm-actions">
+        <button class="hm-btn-icon hm-toggle-btn" onclick="toggleDone(${h.id})" title="${h.done ? 'เปลี่ยนเป็นยังไม่เสร็จ' : 'เปลี่ยนเป็นเสร็จ'}">
+          ${h.done ? '🔁' : '✅'}
+        </button>
+        <button class="hm-btn-icon hm-edit-btn" onclick="editHomework(${h.id})" title="แก้ไข">✏️</button>
+        <button class="hm-btn-icon hm-del-btn" onclick="deleteHomework(${h.id})" title="ลบ">🗑️</button>
+      </td>
+    </tr>
+  `).join('');
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#666;padding:40px">ไม่พบรายการ</td></tr>';
+  }
+}
+
+renderTable();
+</script>
+
+<style>
+.hm-form {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.hm-form-title {
+  font-size: 1.1rem;
+  color: #ffd700;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.hm-form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.hm-form-row:last-child {
+  margin-bottom: 0;
+}
+.hm-input {
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.hm-input:focus {
+  border-color: #ffd700;
+}
+.hm-input option {
+  background: #1a1a1a;
+  color: #fff;
+}
+.hm-date {
+  max-width: 160px;
+}
+.hm-search {
+  flex: 1;
+  min-width: 160px;
+}
+.hm-filter {
+  max-width: 160px;
+}
+.hm-check-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #aaa;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.hm-check-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ffd700;
+}
+.hm-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.hm-btn:hover {
+  transform: scale(1.05);
+}
+.hm-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.hm-table-wrap {
+  overflow-x: auto;
+  background: #111;
+  border-radius: 16px;
+  border: 1px solid #1a1a1a;
+}
+.hm-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+.hm-table th {
+  background: #ffd700;
+  color: #0a0a0a;
+  padding: 12px 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+.hm-table th:first-child {
+  border-radius: 12px 0 0 0;
+}
+.hm-table th:last-child {
+  border-radius: 0 12px 0 0;
+}
+.hm-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #1a1a1a;
+  font-size: 0.85rem;
+  color: #ccc;
+}
+.hm-table tbody tr:hover {
+  background: rgba(255,215,0,0.03);
+}
+.hm-row-done {
+  opacity: 0.45;
+}
+.hm-row-done td:nth-child(3) {
+  text-decoration: line-through;
+  color: #555;
+}
+.hm-status {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.hm-status-done {
+  background: rgba(0,200,83,0.12);
+  color: #69f0ae;
+}
+.hm-status-pending {
+  background: rgba(255,215,0,0.1);
+  color: #ffd740;
+}
+.hm-actions {
+  white-space: nowrap;
+}
+.hm-btn-icon {
+  background: none;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  margin-right: 4px;
+}
+.hm-btn-icon:hover {
+  border-color: #ffd700;
+}
+.hm-del-btn:hover {
+  border-color: #ff4444;
+}
+@media (max-width: 768px) {
+  .hm-form { padding: 16px; }
+  .hm-form-row { flex-direction: column; align-items: stretch; }
+  .hm-date { max-width: none; }
+  .hm-filter { max-width: none; }
+  .hm-table th, .hm-table td { padding: 8px 6px; font-size: 0.78rem; }
+  .hm-btn-icon { padding: 6px; font-size: 0.85rem; }
+}
+@media (max-width: 480px) {
+  .hm-table { min-width: 0; }
+  .hm-table th:nth-child(2), .hm-table td:nth-child(2) { display: none; }
+  .hm-table th:nth-child(4), .hm-table td:nth-child(4) { display: none; }
+}
+</style>
+
+</body>
+</html>
