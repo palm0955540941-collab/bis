@@ -37,30 +37,68 @@
       <img src="images/hkd3.png" alt="HOKKADEE" class="hero-logo">
     </div>
     <h1 class="hero-title">HOKKADEE</h1>
-    <p class="hero-sub">สายดริ้ง สายปาร์ตี้ รวมพลคนมันส์</p>
+    <p class="hero-sub">
+      <span class="typing-text"></span><span class="cursor">|</span>
+    </p>
     <p class="hero-desc">ทุกคนมีเอกลักษณ์เฉพาะตัว แต่เรามารวมกันด้วยมิตรภาพและความสนุก</p>
   </section>
 
   <div class="category-grid">
     <a href="schedule.html" class="category-card">
-      <div class="cat-icon">📅</div>
-      <div class="cat-name">ตารางสอน</div>
-      <div class="cat-desc">ดูตารางเรียนประจำสัปดาห์</div>
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="cat-icon">📅</div>
+          <div class="cat-name">ตารางสอน</div>
+          <div class="cat-desc">ดูตารางเรียนประจำสัปดาห์</div>
+        </div>
+        <div class="card-back">
+          <div class="cat-icon">📖</div>
+          <div class="cat-name">วันนี้เรียนอะไร?</div>
+          <div class="cat-desc">เช็คตารางเรียนกัน</div>
+        </div>
+      </div>
     </a>
     <a href="homework.html" class="category-card">
-      <div class="cat-icon">📚</div>
-      <div class="cat-name">การบ้าน</div>
-      <div class="cat-desc">เช็คการบ้านและกำหนดส่ง</div>
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="cat-icon">📚</div>
+          <div class="cat-name">การบ้าน</div>
+          <div class="cat-desc">เช็คการบ้านและกำหนดส่ง</div>
+        </div>
+        <div class="card-back">
+          <div class="cat-icon">✏️</div>
+          <div class="cat-name">งานไหนส่งเมื่อไหร่</div>
+          <div class="cat-desc">ดูการบ้านด่วน!</div>
+        </div>
+      </div>
     </a>
     <a href="gpa.html" class="category-card">
-      <div class="cat-icon">📊</div>
-      <div class="cat-name">คำนวณเกรด</div>
-      <div class="cat-desc">คำนวณเกรดเฉลี่ยแบบง่ายๆ</div>
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="cat-icon">📊</div>
+          <div class="cat-name">คำนวณเกรด</div>
+          <div class="cat-desc">คำนวณเกรดเฉลี่ยแบบง่ายๆ</div>
+        </div>
+        <div class="card-back">
+          <div class="cat-icon">🧮</div>
+          <div class="cat-name">เกรดเธอเท่าไหร่</div>
+          <div class="cat-desc">คำนวณเลย!</div>
+        </div>
+      </div>
     </a>
     <a href="games.html" class="category-card">
-      <div class="cat-icon">🎲</div>
-      <div class="cat-name">เกมดริ้ง</div>
-      <div class="cat-desc">รัสเซียนรูเล็ต เกมดื่มสุดมันส์</div>
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="cat-icon">🎲</div>
+          <div class="cat-name">เกมดริ้ง</div>
+          <div class="cat-desc">รัสเซียนรูเล็ต เกมดื่มสุดมันส์</div>
+        </div>
+        <div class="card-back">
+          <div class="cat-icon">🍻</div>
+          <div class="cat-name">พร้อมปาร์ตี้ยัง</div>
+          <div class="cat-desc">เข้าไปเล่น!</div>
+        </div>
+      </div>
     </a>
   </div>
 
@@ -85,6 +123,36 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
     document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
   });
 });
+
+const phrases = [
+  "welcome to hokkadee website",
+  "สายดริ้งค์ รวมพลคนโบ๋",
+  "mae mueng tai",
+  "คู่หูสุดคู่รูขี้"
+];
+let idx = 0, charIdx = 0, isDeleting = false;
+
+function type() {
+  const el = document.querySelector('.typing-text');
+  const current = phrases[idx];
+  if (!isDeleting) {
+    el.textContent = current.substring(0, charIdx++);
+    if (charIdx > current.length) {
+      isDeleting = true;
+      setTimeout(type, 2000);
+      return;
+    }
+    setTimeout(type, 70 + Math.random() * 40);
+  } else {
+    el.textContent = current.substring(0, charIdx--);
+    if (charIdx < 0) {
+      isDeleting = false;
+      idx = (idx + 1) % phrases.length;
+    }
+    setTimeout(type, 30 + Math.random() * 20);
+  }
+}
+type();
 </script>
 
 </body>
