@@ -47,6 +47,7 @@
           <th>#</th>
           <th>วิชา</th>
           <th>การบ้าน</th>
+          <th>รายละเอียด</th>
           <th>กำหนดส่ง</th>
           <th>สถานะ</th>
           <th>จัดการ</th>
@@ -71,12 +72,12 @@ const hwIcons = {
 };
 
 const seedData = [
-  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', due: '12 ก.ค. 69', done: false },
-  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', due: '15 ก.ค. 69', done: false },
-  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', due: '18 ก.ค. 69', done: false },
-  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', due: '20 ก.ค. 69', done: false },
-  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', due: '22 ก.ค. 69', done: false },
-  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', due: '25 ก.ค. 69', done: false },
+  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', detail: 'สร้าง CRUD Web Application ด้วย ASP.NET MVC', due: '12 ก.ค. 69', done: false },
+  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', detail: '', due: '15 ก.ค. 69', done: false },
+  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', detail: '', due: '18 ก.ค. 69', done: false },
+  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', detail: '', due: '20 ก.ค. 69', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', detail: '', due: '22 ก.ค. 69', done: false },
+  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', detail: '', due: '25 ก.ค. 69', done: false },
 ];
 
 function loadHomework() {
@@ -130,6 +131,19 @@ function editHomework(id) {
   renderTable();
 }
 
+function editDetail(id) {
+  const data = loadHomework();
+  const item = data.find(h => h.id === id);
+  if (!item) return;
+
+  const newDetail = prompt('แก้ไขรายละเอียดการบ้าน:', item.detail);
+  if (newDetail === null) return;
+
+  item.detail = newDetail.trim();
+  saveHomework(data);
+  renderTable();
+}
+
 function renderTable() {
   const data = loadHomework();
   const search = (document.getElementById('hmSearch').value || '').toLowerCase();
@@ -148,6 +162,7 @@ function renderTable() {
       <td>${i + 1}</td>
       <td>${hwIcons[h.subj] || '📚'} ${h.subj}</td>
       <td>${h.task}</td>
+      <td>${h.detail || '-'}</td>
       <td>📅 ${formatDate(h.due)}</td>
       <td>
         <span class="hm-status ${h.done ? 'hm-status-done' : 'hm-status-pending'}">
@@ -159,13 +174,14 @@ function renderTable() {
           ${h.done ? '🔁' : '✅'}
         </button>
         <button class="hm-btn-icon hm-edit-btn" onclick="editHomework(${h.id})" title="แก้ไข">✏️</button>
+        <button class="hm-btn-icon hm-edit-detail-btn" onclick="editDetail(${h.id})" title="แก้ไขรายละเอียด">📝</button>
         <button class="hm-btn-icon hm-del-btn" onclick="deleteHomework(${h.id})" title="ลบ">🗑️</button>
       </td>
     </tr>
   `).join('');
 
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#666;padding:40px">ไม่พบรายการ</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#666;padding:40px">ไม่พบรายการ</td></tr>';
   }
 }
 
