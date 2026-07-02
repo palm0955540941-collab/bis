@@ -27,6 +27,7 @@
       <a href="homework.html">การบ้าน</a>
       <a href="gpa.html" class="active">คำนวณเกรด</a>
       <a href="games.html">เกมดริ้ง</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="สลับโหมดสี">☀️</button>
     </div>
   </div>
 </nav>
@@ -124,6 +125,22 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
 });
 
 addRow();
+
+(function() {
+  const btn = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    html.classList.add('light-mode');
+    btn.textContent = '🌙';
+  }
+  btn.addEventListener('click', function() {
+    html.classList.toggle('light-mode');
+    const isLight = html.classList.contains('light-mode');
+    btn.textContent = isLight ? '🌙' : '☀️';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  });
+})();
 </script>
 
 </body>
