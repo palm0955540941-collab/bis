@@ -92,6 +92,13 @@
       </tbody>
     </table>
   </div>
+
+  <div class="schedule-notes">
+    <div class="schedule-note"><span class="note-day">อังคาร</span> เช้าเข้า <strong>8.30</strong> น.</div>
+    <div class="schedule-note"><span class="note-day">พุธ</span> เช้าเข้า <strong>9.00</strong> น.</div>
+    <div class="schedule-note"><span class="note-day">พฤหัสบดี</span> เช้าเข้า <strong>9.00</strong> น.</div>
+    <div class="schedule-note"><span class="note-day">ศุกร์</span> เช้าเข้า <strong>9.30</strong> น.</div>
+  </div>
 </div>
 
 <script>
@@ -108,6 +115,8 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
     document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
   });
 });
+
+localStorage.removeItem('theme');
 </script>
 </body>
 </html>
