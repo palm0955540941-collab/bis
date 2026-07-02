@@ -21,7 +21,6 @@
       <a href="schedule.html">ตารางสอน</a>
       <a href="homework.html">การบ้าน</a>
       <a href="homework-manage.html" class="active">จัดการการบ้าน</a>
-      <button class="theme-toggle" id="themeToggle" aria-label="สลับโหมดสี">☀️</button>
     </div>
   </div>
 </nav>
@@ -188,21 +187,7 @@ function renderTable() {
 
 renderTable();
 
-(function() {
-  const btn = document.getElementById('themeToggle');
-  const html = document.documentElement;
-  const saved = localStorage.getItem('theme');
-  if (saved === 'light') {
-    html.classList.add('light-mode');
-    btn.textContent = '🌙';
-  }
-  btn.addEventListener('click', function() {
-    html.classList.toggle('light-mode');
-    const isLight = html.classList.contains('light-mode');
-    btn.textContent = isLight ? '🌙' : '☀️';
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  });
-})();
+localStorage.removeItem('theme');
 </script>
 
 <style>
