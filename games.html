@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="icons.js"></script>
 </head>
 <body>
 
@@ -32,17 +33,17 @@
 </nav>
 
 <div class="container">
-  <h1 class="section-title">🎲 เกมดริ้ง</h1>
+  <h1 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.5" fill="currentColor" stroke="none"/></svg> เกมดริ้ง</h1>
   <div class="section-line"></div>
 
   <div class="game-tabs">
-    <button class="game-tab active">🔫 รัสเซียนรูเล็ต</button>
-    <button class="game-tab disabled">🎯 เกมอื่น (เร็วๆ นี้)</button>
+    <button class="game-tab active"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg> รัสเซียนรูเล็ต</button>
+    <button class="game-tab disabled"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg> เกมอื่น (เร็วๆ นี้)</button>
   </div>
 
   <div class="game-layout">
     <div class="players-panel">
-      <div class="panel-title">👥 ผู้เล่น</div>
+      <div class="panel-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> ผู้เล่น</div>
       <div class="player-input-row">
         <input type="text" id="playerInput" placeholder="ชื่อผู้เล่น..." autocomplete="off">
         <button class="add-btn" onclick="addPlayer()">เพิ่ม</button>
@@ -53,10 +54,10 @@
     </div>
 
     <div class="game-panel">
-      <div class="current-player" id="currentPlayer">👤 เพิ่มผู้เล่นก่อนเริ่ม</div>
+      <div class="current-player" id="currentPlayer"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> เพิ่มผู้เล่นก่อนเริ่ม</div>
 
       <div class="bullet-select">
-        <span class="bullet-label">💥 กระสุน:</span>
+        <span class="bullet-label"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg> กระสุน:</span>
         <div class="bullet-options" id="bulletOptions">
           <button class="bullet-btn active" data-count="1">1</button>
           <button class="bullet-btn" data-count="2">2</button>
@@ -78,17 +79,17 @@
         </div>
       </div>
 
-      <div class="game-status" id="gameStatus">🔄 กรุณาเพิ่มผู้เล่น</div>
+      <div class="game-status" id="gameStatus"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> กรุณาเพิ่มผู้เล่น</div>
 
       <div class="game-controls">
-        <button class="ctrl-btn spin-btn" onclick="spin()" id="spinBtn">🔄 หมุนลำกล้อง</button>
-        <button class="ctrl-btn fire-btn" onclick="fire()" id="fireBtn">🔫 ยิง!</button>
+        <button class="ctrl-btn spin-btn" onclick="spin()" id="spinBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> หมุนลำกล้อง</button>
+        <button class="ctrl-btn fire-btn" onclick="fire()" id="fireBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg> ยิง!</button>
       </div>
     </div>
   </div>
 
   <div class="game-log">
-    <div class="log-title">📜 ประวัติการเล่น</div>
+    <div class="log-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="3" cy="18" r="1" fill="currentColor" stroke="none"/></svg> ประวัติการเล่น</div>
     <div id="logList" class="log-list">
       <div class="empty-msg">ยังไม่มีประวัติ</div>
     </div>
@@ -153,7 +154,7 @@ function selectBullets(n) {
 
 function spin() {
   if (G.players.length < 2) {
-    setStatus('⚠️ ต้องมีผู้เล่นอย่างน้อย 2 คน', '');
+    setStatus(ICONS.alertCircle + ' ต้องมีผู้เล่นอย่างน้อย 2 คน', '');
     return;
   }
   if (G.isAnim) return;
@@ -174,11 +175,11 @@ function spin() {
   }, 500);
 
   render();
-  setStatus(`🔫 พร้อมยิง! กด 🔫 ยิง!`, '');
+    setStatus(ICONS.target + ' พร้อมยิง! กด ' + ICONS.target + ' ยิง!', '');
 }
 
 function fire() {
-  if (!G.canFire) { setStatus('⚠️ หมุนลำกล้องก่อนยิง!', ''); return; }
+  if (!G.canFire) { setStatus(ICONS.alertCircle + ' หมุนลำกล้องก่อนยิง!', ''); return; }
   if (G.players.length < 2) return;
   if (G.isAnim) return;
 
@@ -198,14 +199,14 @@ function fire() {
     ch.classList.remove('active');
     if (i === G.chamberPos) {
       ch.classList.add(hit ? 'hit' : 'safe');
-      ch.textContent = hit ? '🍺' : '✅';
+      ch.innerHTML = hit ? ICONS.beer : ICONS.checkCircle;
     }
   });
 
   if (hit) {
-    setStatus(`💥 ${player} โดน! ดื่ม! 🍻`, 'hit');
+    setStatus(ICONS.zap + ' ' + player + ' โดน! ดื่ม! ' + ICONS.beer, 'hit');
   } else {
-    setStatus(`✅ ${player} รอดเก่ง!`, 'safe');
+    setStatus(ICONS.checkCircle + ' ' + player + ' รอดเก่ง!', 'safe');
   }
 
   document.getElementById('spinBtn').disabled = true;
@@ -226,13 +227,13 @@ function fire() {
     G.currentIdx = (G.currentIdx + 1) % G.players.length;
     document.getElementById('spinBtn').disabled = false;
     render();
-    setStatus(`🔄 ผลัด ${G.players[G.currentIdx]} กดหมุนลำกล้อง`, '');
+    setStatus(ICONS.refresh + ' ผลัด ' + G.players[G.currentIdx] + ' กดหมุนลำกล้อง', '');
   }, 2800);
 }
 
 function setStatus(msg, type) {
   const el = document.getElementById('gameStatus');
-  el.textContent = msg;
+  el.innerHTML = msg;
   el.className = 'game-status' + (type ? ' ' + type : '');
 }
 
@@ -243,16 +244,16 @@ function render() {
   } else {
     list.innerHTML = G.players.map((p, i) => `
       <div class="player-item${i === G.currentIdx ? ' current' : ''}">
-        <span class="name">${i === G.currentIdx ? '🔫 ' : ''}${p}</span>
+        <span class="name">${i === G.currentIdx ? ICONS.target + ' ' : ''}${p}</span>
         <button class="remove-btn" onclick="removePlayer(${i})">✕</button>
       </div>
     `).join('');
   }
 
-  document.getElementById('currentPlayer').textContent =
+  document.getElementById('currentPlayer').innerHTML =
     G.players.length < 2
-      ? '👤 เพิ่มผู้เล่นอย่างน้อย 2 คน'
-      : `🎯 ตาของ: ${G.players[G.currentIdx]}`;
+      ? ICONS.user + ' เพิ่มผู้เล่นอย่างน้อย 2 คน'
+      : ICONS.target + ' ตาของ: ' + G.players[G.currentIdx];
 
   document.querySelectorAll('.chamber').forEach((ch, i) => {
     ch.classList.remove('active');
@@ -279,7 +280,7 @@ function renderLog() {
       <span class="log-player">${e.player}</span>
       <span>→</span>
       <span class="${e.hit ? 'log-result-hit' : 'log-result-safe'}">
-        ${e.hit ? '💥 โดน! ดื่ม! 🍻' : '✅ รอด!'}
+        ${e.hit ? ICONS.zap + ' โดน! ดื่ม! ' + ICONS.beer : ICONS.checkCircle + ' รอด!'}
       </span>
     </div>
   `).join('');

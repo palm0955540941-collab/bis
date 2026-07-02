@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="icons.js"></script>
 </head>
 <body>
 
@@ -32,7 +33,7 @@
 </nav>
 
 <div class="container">
-  <h1 class="section-title">📊 คำนวณเกรดเฉลี่ย</h1>
+  <h1 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> คำนวณเกรดเฉลี่ย</h1>
   <div class="section-line"></div>
 
   <div class="gpa-panel">
@@ -51,9 +52,9 @@
     <div id="gpaRows"></div>
 
     <div class="gpa-actions">
-      <button class="gpa-btn gpa-btn-add" onclick="addRow()">➕ เพิ่มวิชา</button>
-      <button class="gpa-btn gpa-btn-calc" onclick="calculate()">🧮 คำนวณ</button>
-      <button class="gpa-btn gpa-btn-reset" onclick="resetAll()">🗑️ เคลียร์ทั้งหมด</button>
+      <button class="gpa-btn gpa-btn-add" onclick="addRow()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> เพิ่มวิชา</button>
+      <button class="gpa-btn gpa-btn-calc" onclick="calculate()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="18" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="1" fill="currentColor" stroke="none"/><circle cx="16" cy="18" r="1" fill="currentColor" stroke="none"/></svg> คำนวณ</button>
+      <button class="gpa-btn gpa-btn-reset" onclick="resetAll()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> เคลียร์ทั้งหมด</button>
     </div>
   </div>
 </div>

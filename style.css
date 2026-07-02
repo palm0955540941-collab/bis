@@ -1,4 +1,5 @@
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
 
 :root {
   --bg-body: #0a0a0a;
@@ -72,6 +73,7 @@ body {
   justify-content: space-between;
   height: 64px;
   position: relative;
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 .nav-logo {
@@ -190,6 +192,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
+  padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
 }
 
 .section-title {
@@ -310,6 +313,10 @@ body {
 
 .schedule-table-wrap {
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
   background: var(--bg-card);
   border-radius: 16px;
   border: 1px solid var(--border-soft);
@@ -329,6 +336,7 @@ body {
   text-align: center;
   color: var(--text-on-accent);
   border: 1px solid #e6c200;
+  white-space: nowrap;
 }
 
 .sch-tbl thead th {
@@ -434,6 +442,11 @@ body {
   margin-bottom: 10px;
   filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));
   transition: transform 0.25s;
+  color: var(--accent);
+}
+.hw-subj-icon .icon {
+  width: 1em;
+  height: 1em;
 }
 
 .hw-subj-btn:hover .hw-subj-icon {
@@ -503,7 +516,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  .container { padding: 20px 16px; }
+  .container { padding: 20px 16px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
   .nav-links a { padding: 6px 12px; font-size: 0.85rem; }
   .hero { padding: 32px 16px 40px; margin-bottom: 24px; }
   .hero-logo { width: 140px; }
@@ -525,6 +538,37 @@ body {
   .sch-day { font-size: 0.75rem !important; width: 60px; }
   .sch-tbl th { padding: 6px 4px; font-size: 0.75rem; }
   .sch-tbl thead th:not(:first-child) { font-size: 0.75rem; padding: 8px 4px; }
+
+  /* Sticky day column */
+  .sch-tbl thead th:first-child,
+  .sch-tbl tbody td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background: var(--bg-surface);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+  }
+  .sch-tbl thead th:first-child {
+    z-index: 5;
+    background: var(--accent);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.4);
+  }
+
+  /* Bigger touch targets */
+  .bullet-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 0.95rem;
+  }
+  .gpa-btn {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+  .hm-btn-icon {
+    padding: 8px 10px;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -534,9 +578,22 @@ body {
   .hero-title { font-size: 1.4rem; letter-spacing: 3px; }
   .hero-sub { font-size: 0.85rem; }
   .hw-subj-grid { grid-template-columns: 1fr; gap: 8px; }
-  .sch-tbl td { padding: 6px 3px; font-size: 0.65rem; }
-  .sch-subj { font-size: 0.62rem; padding: 4px 4px; }
-  .sch-day { font-size: 0.65rem !important; width: 44px; }
+  .sch-tbl td { padding: 6px 3px; font-size: 0.7rem; }
+  .sch-subj { font-size: 0.65rem; padding: 5px 6px; }
+  .sch-day { font-size: 0.7rem !important; width: 50px; }
+  .sch-tbl th { font-size: 0.7rem; padding: 6px 3px; }
+  .sch-tbl thead th:not(:first-child) { font-size: 0.7rem; padding: 8px 4px; }
+  .schedule-notes { gap: 8px; }
+  .schedule-note { padding: 12px; min-width: 140px; flex: 1 1 140px; }
+}
+
+/* ──────────── Schedule Notes ──────────── */
+/* ──────────── Icon Base ──────────── */
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
 }
 
 /* ──────────── Schedule Notes ──────────── */
@@ -561,11 +618,30 @@ body {
   box-shadow: 0 2px 8px var(--shadow);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   position: relative;
+  white-space: nowrap;
 }
-.schedule-note::before {
-  content: '⏰';
-  font-size: 1.1rem;
+.schedule-note .icon {
+  color: var(--accent);
   flex-shrink: 0;
+  width: 1.2em;
+  height: 1.2em;
+}
+.section-title .icon {
+  color: var(--accent);
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+button, .hm-btn-icon, .gpa-btn, .ctrl-btn, .bullet-btn, .add-btn, .game-tab, .hw-back {
+  touch-action: manipulation;
+}
+button .icon {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.ctrl-btn .icon {
+  margin-right: 6px;
 }
 .schedule-note:hover {
   transform: translateY(-2px);
@@ -580,6 +656,9 @@ body {
 .schedule-note strong {
   color: var(--accent);
   font-size: 1rem;
+}
+.note-text {
+  white-space: nowrap;
 }
 
 /* ──────────── Category Grid (Home) ──────────── */
@@ -652,6 +731,11 @@ body {
   margin-bottom: 14px;
   filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.15));
   transition: transform 0.25s;
+  color: var(--accent);
+}
+.cat-icon .icon {
+  width: 1em;
+  height: 1em;
 }
 
 .category-card:hover .cat-icon {
@@ -939,6 +1023,7 @@ body {
 .log-list {
   display: flex; flex-direction: column; gap: 6px;
   max-height: 260px; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .log-list::-webkit-scrollbar { width: 6px; }
 .log-list::-webkit-scrollbar-track { background: var(--scrollbar-bg); border-radius: 3px; }
@@ -959,6 +1044,9 @@ body {
 .hw-subj-btn:active { transform: scale(0.97); }
 .hw-back:active { transform: scale(0.94); }
 .player-item .remove-btn:active { background: var(--danger-active); }
+@media (max-width: 480px) {
+  .player-item .remove-btn { width: 40px; height: 40px; font-size: 1rem; }
+}
 .bullet-btn:active { border-color: var(--accent); }
 
 /* ──────────── GPA Calculator ──────────── */
@@ -1133,12 +1221,13 @@ body {
   .section-line { margin-bottom: 16px; }
   .container { padding: 12px 10px; }
 
-  .nav-links a { font-size: 0.88rem; padding: 12px 14px; }
+  .nav-links a { font-size: 0.88rem; padding: 12px 14px; min-height: 44px; }
 
   .ctrl-btn {
     width: 100%;
-    padding: 14px 20px;
-    font-size: 0.95rem;
+    padding: 16px 20px;
+    font-size: 1rem;
+    min-height: 52px;
   }
 
   .hw-card { padding: 12px 14px; }
@@ -1148,7 +1237,7 @@ body {
   .hw-subj-name { font-size: 0.9rem; }
 
   .chamber { width: 40px; height: 40px; font-size: 1rem; border-width: 2px; }
-  .revolver { max-width: 144px; gap: 8px; padding: 10px; }
+  .revolver { max-width: 144px; gap: 6px; padding: 8px; }
 
   .current-player { font-size: 1.1rem; padding: 10px; }
   .game-status.hit, .game-status.safe { font-size: 1.2rem; }
@@ -1156,11 +1245,60 @@ body {
   .game-panel { padding: 20px 16px; }
   .game-log { padding: 16px; }
 
-  .bullet-btn { width: 34px; height: 34px; font-size: 0.8rem; }
+  .bullet-btn { width: 40px; height: 40px; font-size: 0.9rem; }
+  .bullet-options { gap: 4px; }
 
-  .sch-tbl td { padding: 4px 2px; font-size: 0.6rem; }
-  .sch-subj { font-size: 0.55rem; padding: 3px 4px; }
-  .sch-day { font-size: 0.6rem !important; width: 36px; }
-  .sch-tbl th { padding: 4px 2px; font-size: 0.65rem; }
-  .sch-tbl thead th:not(:first-child) { font-size: 0.65rem; padding: 6px 2px; }
+  .sch-tbl td { padding: 6px 3px; font-size: 0.68rem; }
+  .sch-subj { font-size: 0.62rem; padding: 4px 5px; border-radius: 6px; }
+  .sch-day { font-size: 0.68rem !important; width: 42px; }
+  .sch-tbl th { padding: 5px 3px; font-size: 0.68rem; }
+  .sch-tbl thead th:not(:first-child) { font-size: 0.68rem; padding: 6px 3px; }
+
+  .gpa-actions { flex-direction: column; gap: 8px; }
+  .gpa-btn { width: 100%; }
+
+  .hw-back { padding: 12px 20px; font-size: 0.95rem; min-height: 44px; }
+  .hm-btn-icon { min-height: 44px; min-width: 44px; }
+}
+
+/* ──────────── Very Small Phones ──────────── */
+@media (max-width: 360px) {
+  .container { padding: 10px 8px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .section-title { font-size: 1.1rem; }
+  .hero { padding: 20px 8px 28px; }
+  .hero-logo { width: 80px; }
+  .hero-title { font-size: 1.2rem; letter-spacing: 2px; }
+
+  .sch-tbl td { padding: 4px 2px; font-size: 0.65rem; }
+  .sch-subj { font-size: 0.6rem; padding: 3px 4px; }
+  .sch-day { font-size: 0.65rem !important; width: 38px; }
+  .sch-tbl th { font-size: 0.65rem; padding: 4px 2px; }
+  .schedule-note { padding: 10px; min-width: 120px; flex: 1 1 120px; font-size: 0.82rem; }
+
+  .hw-subj-btn { padding: 16px 10px; }
+  .hw-subj-icon { font-size: 1.6rem; }
+
+  .game-panel { padding: 16px 12px; }
+  .players-panel { padding: 12px; }
+  .ctrl-btn { padding: 14px 16px; font-size: 0.9rem; }
+  .bullet-btn { width: 36px; height: 36px; font-size: 0.85rem; }
+
+  .chamber { width: 36px; height: 36px; font-size: 0.9rem; }
+  .revolver { max-width: 130px; gap: 5px; padding: 6px; }
+
+  .hm-table th, .hm-table td { padding: 4px 3px; font-size: 0.65rem; }
+}
+
+/* ──────────── Touch Devices: Remove Hover ──────────── */
+@media (hover: none) and (pointer: coarse) {
+  .hw-subj-btn:hover { transform: none; box-shadow: none; }
+  .hw-card:hover { transform: none; box-shadow: none; border-color: var(--border); }
+  .gpa-btn:hover { transform: none; }
+  .ctrl-btn:hover:not(:disabled) { transform: none; }
+  .add-btn:hover { transform: none; }
+  .player-item .remove-btn:hover { background: var(--danger-bg); }
+  .category-card:hover .card-inner { transform: none; box-shadow: none; border-color: var(--border); }
+  .hw-btn-icon:hover { border-color: var(--border); }
+  .schedule-note:hover { transform: none; box-shadow: 0 2px 8px var(--shadow); border-color: var(--border-accent); }
+  .game-tab:hover { border-color: var(--border); }
 }

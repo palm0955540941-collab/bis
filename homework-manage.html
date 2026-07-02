@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="icons.js"></script>
 </head>
 <body>
 
@@ -26,7 +27,7 @@
 </nav>
 
 <div class="container">
-  <h1 class="section-title">📝 จัดการการบ้าน</h1>
+  <h1 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> จัดการการบ้าน</h1>
   <div class="section-line"></div>
 
   <!-- Search / Filter -->
@@ -63,12 +64,12 @@
 const STORAGE_KEY = 'hokkadee_homework';
 
 const hwIcons = {
-  'เขียนโปรแกรมแบบวิชวล': '💻',
-  'ออกแบบ UX/UI': '🎨',
-  'เขียนโปรแกรมเชิงวัตถุ': '🧩',
-  'จัดการเชิงกลยุทธ์': '📊',
-  'วิเคราะห์และออกแบบระบบ': '📋',
-  'สื่อสารข้อมูลธุรกิจ': '🌐',
+  'เขียนโปรแกรมแบบวิชวล': ICONS.monitor,
+  'ออกแบบ UX/UI': ICONS.palette,
+  'เขียนโปรแกรมเชิงวัตถุ': ICONS.puzzle,
+  'จัดการเชิงกลยุทธ์': ICONS.chart,
+  'วิเคราะห์และออกแบบระบบ': ICONS.clipboard,
+  'สื่อสารข้อมูลธุรกิจ': ICONS.globe,
 };
 
 const seedData = [
@@ -160,22 +161,22 @@ function renderTable() {
   tbody.innerHTML = filtered.map((h, i) => `
     <tr class="${h.done ? 'hm-row-done' : ''}">
       <td>${i + 1}</td>
-      <td>${hwIcons[h.subj] || '📚'} ${h.subj}</td>
+      <td>${hwIcons[h.subj] || ICONS.book} ${h.subj}</td>
       <td>${h.task}</td>
       <td>${h.detail || '-'}</td>
-      <td>📅 ${formatDate(h.due)}</td>
+      <td>${ICONS.calendar} ${formatDate(h.due)}</td>
       <td>
         <span class="hm-status ${h.done ? 'hm-status-done' : 'hm-status-pending'}">
-          ${h.done ? '✅ เสร็จ' : '⏳ รอส่ง'}
+          ${h.done ? ICONS.checkCircle + ' เสร็จ' : ICONS.hourglass + ' รอส่ง'}
         </span>
       </td>
       <td class="hm-actions">
         <button class="hm-btn-icon hm-toggle-btn" onclick="toggleDone(${h.id})" title="${h.done ? 'เปลี่ยนเป็นยังไม่เสร็จ' : 'เปลี่ยนเป็นเสร็จ'}">
-          ${h.done ? '🔁' : '✅'}
+          ${h.done ? ICONS.repeat : ICONS.checkCircle}
         </button>
-        <button class="hm-btn-icon hm-edit-btn" onclick="editHomework(${h.id})" title="แก้ไข">✏️</button>
-        <button class="hm-btn-icon hm-edit-detail-btn" onclick="editDetail(${h.id})" title="แก้ไขรายละเอียด">📝</button>
-        <button class="hm-btn-icon hm-del-btn" onclick="deleteHomework(${h.id})" title="ลบ">🗑️</button>
+        <button class="hm-btn-icon hm-edit-btn" onclick="editHomework(${h.id})" title="แก้ไข">${ICONS.pencil}</button>
+        <button class="hm-btn-icon hm-edit-detail-btn" onclick="editDetail(${h.id})" title="แก้ไขรายละเอียด">${ICONS.fileText}</button>
+        <button class="hm-btn-icon hm-del-btn" onclick="deleteHomework(${h.id})" title="ลบ">${ICONS.trash}</button>
       </td>
     </tr>
   `).join('');
@@ -276,6 +277,8 @@ localStorage.removeItem('theme');
 }
 .hm-table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   background: #111;
   border-radius: 16px;
   border: 1px solid #1a1a1a;
@@ -356,12 +359,28 @@ localStorage.removeItem('theme');
   .hm-date { max-width: none; }
   .hm-filter { max-width: none; }
   .hm-table th, .hm-table td { padding: 8px 6px; font-size: 0.78rem; }
-  .hm-btn-icon { padding: 6px; font-size: 0.85rem; }
+  .hm-btn-icon { padding: 8px 10px; font-size: 0.95rem; min-width: 44px; min-height: 44px; }
+
+  .hm-table th:first-child,
+  .hm-table td:first-child {
+    position: sticky;
+    left: 0;
+    background: #111;
+    z-index: 2;
+  }
+  .hm-table th:first-child {
+    background: #ffd700;
+    z-index: 3;
+  }
+  .hm-table tbody td:first-child {
+    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+  }
 }
 @media (max-width: 480px) {
   .hm-table { min-width: 0; }
   .hm-table th:nth-child(2), .hm-table td:nth-child(2) { display: none; }
   .hm-table th:nth-child(4), .hm-table td:nth-child(4) { display: none; }
+  .hm-table th, .hm-table td { padding: 6px 4px; font-size: 0.72rem; }
 }
 </style>
 

@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="icons.js"></script>
 </head>
 <body>
 
@@ -41,7 +42,7 @@
   </div>
 
   <div id="hw-detail-view" style="display:none">
-    <button class="hw-back" onclick="showHwSubjects()">← กลับ</button>
+    <button class="hw-back" onclick="showHwSubjects()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> กลับ</button>
     <h1 class="section-title" id="hw-detail-title">การบ้าน</h1>
     <div class="section-line"></div>
     <div id="hw-list"></div>
@@ -50,12 +51,12 @@
 
 <script>
 const hwIcons = {
-  'เขียนโปรแกรมแบบวิชวล': '💻',
-  'ออกแบบ UX/UI': '🎨',
-  'เขียนโปรแกรมเชิงวัตถุ': '🧩',
-  'จัดการเชิงกลยุทธ์': '📊',
-  'วิเคราะห์และออกแบบระบบ': '📋',
-  'สื่อสารข้อมูลธุรกิจ': '🌐',
+  'เขียนโปรแกรมแบบวิชวล': ICONS.monitor,
+  'ออกแบบ UX/UI': ICONS.palette,
+  'เขียนโปรแกรมเชิงวัตถุ': ICONS.puzzle,
+  'จัดการเชิงกลยุทธ์': ICONS.chart,
+  'วิเคราะห์และออกแบบระบบ': ICONS.clipboard,
+  'สื่อสารข้อมูลธุรกิจ': ICONS.globe,
 };
 
 const seedData = [
@@ -87,7 +88,7 @@ function renderSubjects() {
     const items = homework.filter(h => h.subj === s);
     return `
       <div class="hw-subj-btn" onclick="showHwDetail('${s}')">
-        <div class="hw-subj-icon">${hwIcons[s] || '📚'}</div>
+        <div class="hw-subj-icon">${hwIcons[s] || ICONS.book}</div>
         <div class="hw-subj-name">${s}</div>
         <div class="hw-subj-count">${items.length} งาน</div>
       </div>
@@ -115,7 +116,7 @@ function renderHwList(subj) {
       <div class="hw-task">${h.task}</div>
       ${h.detail ? `<div class="hw-detail">${h.detail}</div>` : ''}
       <div class="hw-foot">
-        <span class="hw-due">📅 ${formatDate(h.due)}</span>
+        <span class="hw-due">${ICONS.calendar} ${formatDate(h.due)}</span>
       </div>
     </div>
   `).join('');
