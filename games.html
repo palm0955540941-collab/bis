@@ -205,6 +205,7 @@ function fire() {
 
   if (hit) {
     setStatus(ICONS.zap + ' ' + player + ' โดน! ดื่ม! ' + ICONS.beer, 'hit');
+    if (typeof showConfetti === 'function') showConfetti();
   } else {
     setStatus(ICONS.checkCircle + ' ' + player + ' รอดเก่ง!', 'safe');
   }
@@ -315,5 +316,7 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
 
 localStorage.removeItem('theme');
 </script>
+
+<script src="main.js"></script>
 </body>
 </html>

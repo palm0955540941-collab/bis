@@ -106,6 +106,7 @@ function init() {
   renderSchedule();
   renderDrinks();
   setInterval(startCountdown, 1000);
+  if (typeof initParticles === 'function') initParticles();
 }
 
 function closeMobileMenu() {

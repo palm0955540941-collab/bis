@@ -100,6 +100,7 @@ function calculate() {
   const gpa = totalCredits > 0 ? totalPoints / totalCredits : 0;
   document.getElementById('gpaValue').textContent = gpa.toFixed(2);
   document.getElementById('gpaTotal').textContent = `หน่วยกิตทั้งหมด: ${totalCredits.toFixed(1)}`;
+  if (typeof showConfetti === 'function') showConfetti();
 }
 
 function resetAll() {
@@ -129,5 +130,6 @@ addRow();
 localStorage.removeItem('theme');
 </script>
 
+<script src="main.js"></script>
 </body>
 </html>
