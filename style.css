@@ -495,6 +495,8 @@ body {
   align-items: center;
   padding-top: 12px;
   border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .hw-due {
@@ -504,6 +506,35 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.hw-countdown {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  display: inline-block;
+  background: rgba(255, 215, 0, 0.12);
+  color: #ffd740;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  letter-spacing: 0.3px;
+}
+.hw-countdown.urgent {
+  background: rgba(255, 152, 0, 0.18);
+  color: #ffab00;
+  border-color: rgba(255, 152, 0, 0.3);
+  animation: pulse-urgent 1.5s ease-in-out infinite;
+}
+.hw-countdown.overdue {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff6b6b;
+  border-color: rgba(255, 68, 68, 0.25);
+  font-weight: 800;
+}
+@keyframes pulse-urgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 @media (max-width: 768px) {

@@ -73,12 +73,12 @@ const hwIcons = {
 };
 
 const seedData = [
-  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', detail: 'สร้าง CRUD Web Application ด้วย ASP.NET MVC', due: '12 ก.ค. 69', done: false },
-  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', detail: '', due: '15 ก.ค. 69', done: false },
-  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', detail: '', due: '18 ก.ค. 69', done: false },
-  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', detail: '', due: '20 ก.ค. 69', done: false },
-  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', detail: '', due: '22 ก.ค. 69', done: false },
-  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', detail: '', due: '25 ก.ค. 69', done: false },
+  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', detail: 'สร้าง CRUD Web Application ด้วย ASP.NET MVC', due: '2026-07-12 23:59:00', done: false },
+  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', detail: '', due: '2026-07-15 23:59:00', done: false },
+  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', detail: '', due: '2026-07-18 23:59:00', done: false },
+  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', detail: '', due: '2026-07-20 23:59:00', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', detail: '', due: '2026-07-22 23:59:00', done: false },
+  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', detail: '', due: '2026-07-25 23:59:00', done: false },
 ];
 
 function loadHomework() {
@@ -94,11 +94,31 @@ function saveHomework(data) {
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
-  const d = new Date(dateStr + 'T00:00:00');
+  const d = new Date(dateStr);
   if (isNaN(d)) return dateStr;
-  const days = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
   const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
+}
+
+function startCountdown() {
+  const els = document.querySelectorAll('[data-due]');
+  if (!els.length) return;
+  const now = Date.now();
+  els.forEach(el => {
+    const target = new Date(el.dataset.due).getTime();
+    const diff = target - now;
+    if (diff <= 0) {
+      el.textContent = '⏰ หมดเวลาส่งงานแล้ว!';
+      el.className = 'hw-countdown overdue';
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    el.textContent = `⏱ ${days}วัน ${hrs}ชม ${mins}น ${secs}วิ`;
+    el.className = 'hw-countdown' + (days < 3 ? ' urgent' : '');
+  });
 }
 
 function toggleDone(id) {
@@ -164,7 +184,7 @@ function renderTable() {
       <td>${hwIcons[h.subj] || ICONS.book} ${h.subj}</td>
       <td>${h.task}</td>
       <td>${h.detail || '-'}</td>
-      <td>${ICONS.calendar} ${formatDate(h.due)}</td>
+      <td>${ICONS.calendar} ${formatDate(h.due)}<br><span class="hw-countdown" data-due="${h.due}"></span></td>
       <td>
         <span class="hm-status ${h.done ? 'hm-status-done' : 'hm-status-pending'}">
           ${h.done ? ICONS.checkCircle + ' เสร็จ' : ICONS.hourglass + ' รอส่ง'}
@@ -187,6 +207,8 @@ function renderTable() {
 }
 
 renderTable();
+startCountdown();
+setInterval(startCountdown, 1000);
 
 localStorage.removeItem('theme');
 </script>

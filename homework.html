@@ -60,24 +60,45 @@ const hwIcons = {
 };
 
 const seedData = [
-  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'แบบฝึกหัดท้ายหน่วยเรียนที่ 1', detail: 'แบบฝึกหัดท้ายบท ', due: '30 มิ.ย. 69', done: false },
-  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบสร้างฟอร์มสำหรับกรอกข้อมูลนักศึกษา', detail: 'ออกแบบฟอร์มแบบไหนก็ได้จ้า และโปรแกรมไหนก็ได้จ้า', due: '1 ก.ค. 69', done: false },
-  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'แบบฝึกหัดท้ายหน่วยเรียนที่ 1', detail: '', due: '30 มิ.ย. 69', done: false },
-  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'ธุรกิจที่ประสบความสําเร็จ และ ธุรกิจที่ล้มเหลว', detail: '', due: '3 ก.ค. 69', done: false },
-  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'แบบฝึกหัดท้ายบทที่ 1', detail: '', due: '29 มิ.ย. 69', done: false },
-  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'งานกลุ่มภายในห้อง', detail: '', due: '29 มิ.ย. 69', done: false },
-
-  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'ใบงานที่ 1 พื้นฐานการสื่อสารข้อมูลและเครือข่าย', detail: 'ทำแบบฝึกหัดท้ายบทและกรณีศึกษา', due: '2 ก.ค. 69', done: false },
-  
+  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'แบบฝึกหัดท้ายหน่วยเรียนที่ 1', detail: 'แบบฝึกหัดท้ายบท ', due: '2026-07-7 23:59:00', done: false },
+  { id: 2, subj: 'ออกแบบ UX/UI', task: 'ออกแบบสร้างฟอร์มสำหรับกรอกข้อมูลนักศึกษา', detail: 'ออกแบบฟอร์มแบบไหนก็ได้จ้า และโปรแกรมไหนก็ได้จ้า', due: '2026-07-08 23:59:00', done: false },
+  { id: 3, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'แบบฝึกหัดท้ายหน่วยเรียนที่ 1', detail: '', due: '2026-07-7 23:59:00', done: false },
+  { id: 4, subj: 'จัดการเชิงกลยุทธ์', task: 'ธุรกิจที่ประสบความสําเร็จ และ ธุรกิจที่ล้มเหลว', detail: '', due: '2026-07-10 23:59:00', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'แบบฝึกหัดท้ายบทที่ 1', detail: '', due: '2026-07-6 23:59:00', done: false },
+  { id: 5, subj: 'วิเคราะห์และออกแบบระบบ', task: 'งานกลุ่มภายในห้อง', detail: '', due: '2026-07-6 23:59:00', done: false },
+  { id: 6, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'ใบงานที่ 1 พื้นฐานการสื่อสารข้อมูลและเครือข่าย', detail: 'ทำแบบฝึกหัดท้ายบทและกรณีศึกษา', due: '2026-07-9 23:59:00', done: false },
 ];
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
   if (!dateStr.includes('-')) return dateStr;
-  const d = new Date(dateStr + 'T00:00:00');
+  const d = new Date(dateStr);
   if (isNaN(d)) return dateStr;
   const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
+}
+
+
+
+function startCountdown() {
+  const els = document.querySelectorAll('[data-due]');
+  if (!els.length) return;
+  const now = Date.now();
+  els.forEach(el => {
+    const target = new Date(el.dataset.due).getTime();
+    const diff = target - now;
+    if (diff <= 0) {
+      el.textContent = '⏰ หมดเวลาส่งงานแล้ว!';
+      el.className = 'hw-countdown overdue';
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    el.textContent = `⏱ ${days}วัน ${hrs}ชม ${mins}น ${secs}วิ`;
+    el.className = 'hw-countdown' + (days < 3 ? ' urgent' : '');
+  });
 }
 
 function renderSubjects() {
@@ -117,15 +138,18 @@ function renderHwList(subj) {
       ${h.detail ? `<div class="hw-detail">${h.detail}</div>` : ''}
       <div class="hw-foot">
         <span class="hw-due">${ICONS.calendar} ${formatDate(h.due)}</span>
+        <span class="hw-countdown" data-due="${h.due}"></span>
       </div>
     </div>
   `).join('');
   if (items.length === 0) {
     list.innerHTML = '<p style="text-align:center;color:#666;padding:40px">ไม่มีการบ้านในวิชานี้</p>';
   }
+  startCountdown();
 }
 
 renderSubjects();
+setInterval(startCountdown, 1000);
 </script>
 
 <style>

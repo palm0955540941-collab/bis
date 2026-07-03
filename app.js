@@ -44,19 +44,48 @@ const hwIcons = {
 };
 
 const seedData = [
-  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', detail: 'สร้าง CRUD Web Application ด้วย ASP.NET MVC', due: '12 ก.ค. 69', done: false },
-  { id: 2, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'แบบฝึกหัด Inheritance', detail: '', due: '19 ก.ค. 69', done: false },
-  { id: 3, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', detail: '', due: '15 ก.ค. 69', done: false },
-  { id: 4, subj: 'ออกแบบ UX/UI', task: 'ทำ User Persona', detail: '', due: '22 ก.ค. 69', done: true },
-  { id: 5, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', detail: '', due: '18 ก.ค. 69', done: true },
-  { id: 6, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'เขียนโปรแกรม Polymorphism', detail: '', due: '25 ก.ค. 69', done: false },
-  { id: 7, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', detail: '', due: '20 ก.ค. 69', done: false },
-  { id: 8, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', detail: '', due: '22 ก.ค. 69', done: false },
-  { id: 9, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', detail: '', due: '25 ก.ค. 69', done: true },
+  { id: 1, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'สร้างเว็บ CRUD ด้วย C#', detail: 'สร้าง CRUD Web Application ด้วย ASP.NET MVC', due: '2026-07-12 23:59:00', done: false },
+  { id: 2, subj: 'เขียนโปรแกรมแบบวิชวล', task: 'แบบฝึกหัด Inheritance', detail: '', due: '2026-07-19 23:59:00', done: false },
+  { id: 3, subj: 'ออกแบบ UX/UI', task: 'ออกแบบ Mobile App Prototype', detail: '', due: '2026-07-15 23:59:00', done: false },
+  { id: 4, subj: 'ออกแบบ UX/UI', task: 'ทำ User Persona', detail: '', due: '2026-07-22 23:59:00', done: true },
+  { id: 5, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'ส่งงาน UML Diagram', detail: '', due: '2026-07-18 23:59:00', done: true },
+  { id: 6, subj: 'เขียนโปรแกรมเชิงวัตถุ', task: 'เขียนโปรแกรม Polymorphism', detail: '', due: '2026-07-25 23:59:00', done: false },
+  { id: 7, subj: 'จัดการเชิงกลยุทธ์', task: 'รายงานการวิเคราะห์คู่แข่ง', detail: '', due: '2026-07-20 23:59:00', done: false },
+  { id: 8, subj: 'วิเคราะห์และออกแบบระบบ', task: 'Analysis Report บริษัทตัวอย่าง', detail: '', due: '2026-07-22 23:59:00', done: false },
+  { id: 9, subj: 'สื่อสารข้อมูลธุรกิจ', task: 'จำลองเครือข่ายด้วย Packet Tracer', detail: '', due: '2026-07-25 23:59:00', done: true },
 ];
 
 function saveHomework() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(homework));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  const months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()+543}`;
+}
+
+function startCountdown() {
+  const els = document.querySelectorAll('[data-due]');
+  if (!els.length) return;
+  const now = Date.now();
+  els.forEach(el => {
+    const target = new Date(el.dataset.due).getTime();
+    const diff = target - now;
+    if (diff <= 0) {
+      el.textContent = '⏰ หมดเวลาส่งงานแล้ว!';
+      el.className = 'hw-countdown overdue';
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    el.textContent = `⏱ ${days}วัน ${hrs}ชม ${mins}น ${secs}วิ`;
+    el.className = 'hw-countdown' + (days < 3 ? ' urgent' : '');
+  });
 }
 
 function loadHomework() {
@@ -74,6 +103,7 @@ function init() {
   loadHomework();
   renderSchedule();
   renderDrinks();
+  setInterval(startCountdown, 1000);
 }
 
 function closeMobileMenu() {
@@ -180,7 +210,8 @@ function renderHwList(subj) {
         <div class="hw-task">${h.task}</div>
         ${h.detail ? `<div class="hw-detail">${h.detail}</div>` : ''}
         <div class="hw-foot">
-          <span class="hw-due">📅 ${h.due}</span>
+          <span class="hw-due">📅 ${formatDate(h.due)}</span>
+          <span class="hw-countdown" data-due="${h.due}"></span>
           <button class="hw-toggle" onclick="toggleHw(${idx})">${h.done ? '🔁' : '✅'}</button>
         </div>
       </div>
@@ -193,6 +224,7 @@ function renderHwList(subj) {
       <button class="hw-add-btn" onclick="addHomework('${subj}')">➕ เพิ่ม</button>
     </div>
   `;
+  startCountdown();
 }
 
 function showToast(msg, isError) {
@@ -221,7 +253,7 @@ function addHomework(subj) {
   if (!taskVal || !dueVal) { showToast('กรุณากรอกชื่อการบ้านและวันที่ให้ครบ', true); return; }
 
   const maxId = homework.length > 0 ? Math.max(...homework.map(h => h.id)) : 0;
-  homework.push({ id: maxId + 1, subj, task: taskVal, detail: detailVal, due: dueVal, done: false });
+  homework.push({ id: maxId + 1, subj, task: taskVal, detail: detailVal, due: dueVal + ' 23:59:00', done: false });
   saveHomework();
 
   task.value = '';
