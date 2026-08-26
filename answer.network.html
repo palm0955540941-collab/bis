@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยข้อสอบ: เครือข่ายคอมพิวเตอร์ - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-body: #0a0a0a;
+  --bg-surface: #0d0d0d;
+  --bg-card: #111111;
+  --bg-elevated: #141414;
+  --bg-elevated-2: #1a1a1a;
+  --border: #2a2a2a;
+  --border-soft: #1a1a1a;
+  --border-accent: #3a3a3a;
+  --text: #e0e0e0;
+  --text-muted: #999999;
+  --text-muted-3: #777777;
+  --text-muted-4: #666666;
+  --text-muted-5: #555555;
+  --accent: #ffd700;
+  --accent-dark: #ffaa00;
+  --accent-soft: rgba(255, 215, 0, 0.06);
+  --accent-med: rgba(255, 215, 0, 0.12);
+  --danger: #ff4444;
+  --success: #00cc00;
+  --success-bg: #0d3d0d;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-accent: rgba(255, 215, 0, 0.12);
+  --text-on-accent: #0a0a0a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Kanit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-body);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: var(--bg-surface);
+  padding: 0 20px;
+  padding-top: env(safe-area-inset-top, 0px);
+  position: sticky;
+  top: 0;
+  z-index: 160;
+  border-bottom: 1px solid var(--border);
+}
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img { height: 42px; width: auto; }
+.nav-logo-img:hover { opacity: 0.85; }
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s, background 0.2s;
+  border-radius: 8px;
+}
+.nav-links a:hover { color: var(--accent); background: var(--accent-soft); }
+.nav-links a.active { color: var(--accent); background: rgba(255, 215, 0, 0.1); }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 170;
+}
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-muted);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.active span:nth-child(2) { opacity: 0; }
+.nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 20px 20px;
+    box-shadow: 0 8px 24px var(--shadow);
+    gap: 2px;
+    z-index: 160;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 14px 16px; min-height: 44px; display: flex; align-items: center; font-size: 0.95rem; border-radius: 10px; }
+}
+
+.container {
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 30px 20px;
+  padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.section-line {
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  margin: 0 auto 32px;
+  border-radius: 2px;
+}
+
+.question-block {
+  margin-bottom: 28px;
+  padding: 24px 28px;
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-surface));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  border-left: 4px solid var(--accent);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.question-block:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow-accent);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.question-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: var(--accent);
+  line-height: 1.6;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.options label:hover {
+  background: var(--accent-soft);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+.options label.correct-answer {
+  background: rgba(0, 204, 0, 0.1);
+  border-color: rgba(0, 204, 0, 0.4);
+  color: #6bcb77;
+  font-weight: 600;
+}
+.options label.correct-answer::after {
+  content: '✓';
+  margin-left: auto;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #6bcb77;
+  flex-shrink: 0;
+}
+.options label.wrong-selected {
+  background: rgba(255, 68, 68, 0.1);
+  border-color: rgba(255, 68, 68, 0.4);
+  color: #ff6b6b;
+}
+
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.feedback {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  display: none;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.correct {
+  background: var(--success-bg);
+  color: #6bcb77;
+  border: 1px solid rgba(0, 204, 0, 0.3);
+}
+.incorrect {
+  background: rgba(255, 68, 68, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 68, 68, 0.25);
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+button {
+  padding: 14px 36px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.2s;
+  font-family: 'Kanit', sans-serif;
+}
+button:active { transform: scale(0.96); }
+
+#submit-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: var(--text-on-accent);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+#submit-btn:hover { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); }
+
+#reset-btn {
+  background: var(--bg-elevated-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  display: none;
+}
+#reset-btn:hover { border-color: var(--accent); }
+
+#result-summary {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 800;
+  margin-top: 24px;
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .container { padding: 20px 16px; }
+  .section-title { font-size: 1.4rem; }
+  .question-block { padding: 18px 20px; }
+  .options label { padding: 10px 14px; font-size: 0.9rem; }
+  #result-summary { font-size: 1.3em; }
+}
+@media (max-width: 480px) {
+  .container { padding: 16px 12px; }
+  .question-block { padding: 14px 16px; }
+  .question-title { font-size: 0.92rem; }
+  .options label { padding: 10px 12px; font-size: 0.85rem; }
+  button { padding: 12px 24px; font-size: 0.95rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <button class="nav-toggle" aria-label="เปิดเมนู">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
+      <a href="gpa.html">คำนวณเกรด</a>
+      <a href="answer.network.html" class="active">เฉลยข้อสอบเครือข่าย</a>
+      <a href="games.html">เกมดริ้ง</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="section-title">เฉลยข้อสอบวิชาเครือข่ายคอมพิวเตอร์</h1>
+  <div class="section-line"></div>
+
+  <div id="quiz-container"></div>
+  <div id="result-summary"></div>
+
+  <div class="buttons">
+    <button id="submit-btn" onclick="submitQuiz()">ส่งคำตอบ</button>
+    <button id="reset-btn" onclick="resetQuiz()">ทำใหม่อีกครั้ง</button>
+  </div>
+</div>
+
+<script>
+const quizData = [
+  // ==========================================
+  // ข้อสอบบทที่ 1 (20 ข้อ)
+  // ==========================================
+  {
+    question: "1. การนำคอมพิวเตอร์หลายๆ เครื่องเชื่อมต่อเข้าด้วยกัน ก่อให้เกิดผลตามข้อใด",
+    options: ["Computer Network", "Client", "Server", "Hub"],
+    answer: 0,
+    explanation: "การเชื่อมต่อคอมพิวเตอร์หลายเครื่องเข้าด้วยกันคือความหมายของ Computer Network"
+  },
+  {
+    question: "2. ข้อใดต่อไปนี้ มิได้จัดอยู่ในส่วนประกอบของระบบการสื่อสารข้อมูล",
+    options: ["Message", "Protocol", "Hacker", "Sender/Receiver"],
+    answer: 2,
+    explanation: "Hacker ไม่ใช่ส่วนประกอบของระบบการสื่อสารข้อมูล (ส่วนประกอบหลักคือ Message, Sender, Receiver, Medium, Protocol)"
+  },
+  {
+    question: "3. โพรโทคอล (Protocol) ตรงกับความหมายตามข้อใด",
+    options: ["รูปแบบการเขียนภาษาคอมพิวเตอร์", "สื่อกลางที่นำมาใช้สำหรับสื่อสาร", "กฎเกณฑ์หรือข้อตกลงที่นำมาใช้สื่อสาร", "รูปแบบการเชื่อมต่อเครือข่าย"],
+    answer: 2,
+    explanation: "Protocol คือกฎเกณฑ์และข้อตกลงที่ใช้ในการสื่อสารข้อมูลบนเครือข่าย"
+  },
+  {
+    question: "4. โพรโทคอล สามารถนำไปเทียบเคียงกับข้อใด",
+    options: ["หน่วยความจำ", "ภาษาที่ใช้สื่อสารกัน", "คอมไพเลอร์", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 1,
+    explanation: "เปรียบเสมือน 'ภาษา' ที่คอมพิวเตอร์ใช้คุยกันเพื่อให้เข้าใจตรงกัน"
+  },
+  {
+    question: "5. ข่าวสารที่สื่อสารกันบนเครือข่าย จะถูกลำเลียงผ่านสิ่งใด",
+    options: ["สายสัญญาณ", "คลื่นวิทยุ", "สื่อกลางส่งข้อมูล", "เป็นไปได้ทุกข้อ"],
+    answer: 2,
+    explanation: "ถูกลำเลียงผ่าน 'สื่อกลางส่งข้อมูล' (Medium) ซึ่งอาจเป็นแบบมีสายหรือไร้สายก็ได้"
+  },
+  {
+    question: "6. คุณสมบัติ 4 ประการของระบบการสื่อสารข้อมูล ประกอบด้วยอะไรบ้าง",
+    options: ["Delivery, Accuracy, Source, Destination", "Message, Sender, Receiver, Protocol", "Delivery, Accuracy, Timeliness, Jitter", "ผิดทุกข้อ"],
+    answer: 2,
+    explanation: "คุณสมบัติที่ดีต้องมีการส่งมอบตรงจุด (Delivery), แม่นยำ (Accuracy), ทันเวลา (Timeliness) และความหน่วงคงที่ (Jitter)"
+  },
+  {
+    question: "7. การสนทนากันผ่านโทรศัพท์ จัดเป็นการสื่อสารที่เป็นไปตามทิศทางการไหลของข้อมูลตามข้อใด",
+    options: ["Simplex", "Half-Duplex", "Multiplex", "Full-Duplex"],
+    answer: 3,
+    explanation: "โทรศัพท์เป็นการสื่อสารแบบ 2 ทางพร้อมกัน จึงเป็น Full-Duplex"
+  },
+  {
+    question: "8. อุปกรณ์โทรคมนาคมตามข้อใด ที่ประเทศไทยได้ยกเลิกการบริการแล้ว",
+    options: ["โทรเลข", "โทรสาร", "โทรศัพท์", "โทรทัศน์"],
+    answer: 0,
+    explanation: "โทรเลข (Telegraph) เป็นบริการที่ถูกยกเลิกไปแล้วในประเทศไทย"
+  },
+  {
+    question: "9. จากข้อที่ 8 อุปกรณ์โทรคมนาคมดังกล่าวสามารถเทียบเคียงได้กับเทคโนโลยีใดในปัจจุบัน",
+    options: ["LAN", "SMS", "Pager", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 3,
+    explanation: "โทรเลขเป็นการส่งข้อความสั้นๆ ซึ่งเทียบเคียงได้กับเทคโนโลยี SMS และ Pager"
+  },
+  {
+    question: "10. Line-of-sight เกี่ยวข้องกับการสื่อสารตามข้อใด",
+    options: ["Telephone", "Microwave", "Radio", "Infrared"],
+    answer: 1,
+    explanation: "คลื่นไมโครเวฟ (Microwave) ต้องอาศัยการส่งสัญญาณแบบเส้นตรงในระดับสายตา (Line-of-sight)"
+  },
+  {
+    question: "11. ก่อนที่จะมีเครือข่าย การขอคัดลอกข้อมูลจากส่วนงานอื่นๆ เพื่อนำมาใช้งาน เรียกว่าอะไร",
+    options: ["Snookernet", "Sneakernet", "Internet", "LAN"],
+    answer: 1,
+    explanation: "การเดินถือแผ่นดิสก์หรือแฟลชไดร์ฟไปก๊อปปี้ข้อมูลด้วยตัวเองเรียกว่า Sneakernet"
+  },
+  {
+    question: "12. ข้อใดต่อไปนี้ มิใช่ประโยชน์ของเครือข่าย",
+    options: ["การแบ่งปันการใช้งานทรัพยากรร่วมกัน", "ช่วยลดค่าใช้จ่าย", "คอมพิวเตอร์ทำงานได้รวดเร็วขึ้น", "ทำให้สื่อสารได้สะดวกยิ่งขึ้น"],
+    answer: 2,
+    explanation: "เครือข่ายไม่ได้ทำให้เครื่องคอมพิวเตอร์แต่ละเครื่องประมวลผลได้รวดเร็วขึ้นโดยตรง"
+  },
+  {
+    question: "13. เวลาที่ใช้ขนส่งข้อมูลและเวลาตอบสนอง เป็นเกณฑ์วัดประสิทธิภาพของเครือข่ายตามข้อใด",
+    options: ["Performance", "Reliability", "Security", "Recovery"],
+    answer: 0,
+    explanation: "เวลาการขนส่ง (Transit time) และเวลาตอบสนอง (Response time) เป็นตัววัดด้านประสิทธิภาพ (Performance)"
+  },
+  {
+    question: "14. กรณีเครือข่ายล่ม แล้วสามารถกู้คืนระบบได้อย่างรวดเร็ว ตรงกับเกณฑ์วัดประสิทธิภาพของเครือข่ายตามข้อใด",
+    options: ["Performance", "Reliability", "Security", "Recovery"],
+    answer: 1,
+    explanation: "ความสามารถในการกู้คืนระบบแสดงถึงความน่าเชื่อถือและเสถียรภาพ (Reliability) ของเครือข่าย"
+  },
+  {
+    question: "15. ข้อใดต่อไปนี้ คือวัตถุประสงค์ของมาตรฐาน",
+    options: ["เพื่อให้อุปกรณ์สามารถส่งสัญญาณไปยังอุปกรณ์อื่นๆ ได้", "เพื่อให้อุปกรณ์ต่างๆ สามารถใช้งานเข้ากันได้ และเชื่อมต่อระหว่างกันได้", "เพื่อสร้างความมั่นใจถึงสื่อกลางที่สามารถทำงานเฉพาะด้านได้", "ถูกทุกข้อ"],
+    answer: 3,
+    explanation: "มาตรฐานถูกสร้างขึ้นเพื่อให้ฮาร์ดแวร์และซอฟต์แวร์จากต่างผู้ผลิตสามารถทำงานร่วมกันได้อย่างสมบูรณ์"
+  },
+  {
+    question: "16. กรณีบริษัท IBM ได้กำหนดมาตรฐานขึ้นมาเพื่อใช้งานบนเครือข่ายของ IBM เอง จัดอยู่ในมาตรฐานตามข้อใด",
+    options: ["OSI Model", "De Facto", "De Jure", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 1,
+    explanation: "มาตรฐานที่ถูกกำหนดโดยผู้ผลิตรายใดรายหนึ่งและใช้กันอย่างแพร่หลายโดยพฤตินัย เรียกว่า De Facto"
+  },
+  {
+    question: "17. องค์กรตามข้อใด กำกับดูแลมาตรฐานเครือข่ายท้องถิ่น",
+    options: ["ISO", "ITU-T", "ANSI", "IEEE"],
+    answer: 3,
+    explanation: "IEEE (Institute of Electrical and Electronics Engineers) เป็นผู้กำหนดมาตรฐานเครือข่าย LAN (เช่น IEEE 802.3 สำหรับ Ethernet)"
+  },
+  {
+    question: "18. บริษัทแห่งหนึ่งมีสำนักงานใหญ่ตั้งอยู่ที่ประเทศอังกฤษ และมีสาขาย่อยต่างๆ ซึ่งตั้งอยู่ในแถบยุโรปและเอเชีย เมื่อต้องการเชื่อมต่อสาขาต่างๆ เข้ากับสำนักงานใหญ่ จะต้องเชื่อมโยงเครือข่ายตามข้อใด",
+    options: ["LAN", "WAN", "MAN", "เป็นไปได้ทุกข้อ"],
+    answer: 1,
+    explanation: "การเชื่อมต่อข้ามประเทศหรือทวีป ต้องใช้เครือข่ายบริเวณกว้าง (WAN - Wide Area Network)"
+  },
+  {
+    question: "19. กรณีสำนักงานมีคอมพิวเตอร์อยู่จำนวน 10 เครื่อง และเครื่องพิมพ์ 2 เครื่อง หากต้องการเชื่อมโยงเพื่อให้พนักงานสามารถใช้ทรัพยากรร่วมกันได้ ควรเชื่อมโยงเครือข่ายตามข้อใด",
+    options: ["LAN", "WAN", "MAN", "เป็นไปได้ทุกข้อ"],
+    answer: 0,
+    explanation: "การเชื่อมต่อในพื้นที่ขนาดเล็ก เช่น ในสำนักงานเดียวกัน ใช้เครือข่ายท้องถิ่น (LAN)"
+  },
+  {
+    question: "20. ในประเทศไทย มาตรฐานขั้นต่ำของการเข้าถึงอินเทอร์เน็ตความเร็วสูงตามบ้านพักอาศัย ตรงกับระบบใด",
+    options: ["Dial Up", "ADSL", "Cable Modem", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 1,
+    explanation: "ADSL เป็นเทคโนโลยีบรอดแบนด์พื้นฐานที่ใช้อินเทอร์เน็ตผ่านสายโทรศัพท์"
+  },
+
+  // ==========================================
+  // ข้อสอบบทที่ 2 (20 ข้อ)
+  // ==========================================
+  {
+    question: "21. องค์กร ISO ได้กำหนดมาตรฐานระบบเปิดขึ้นมา เรียกว่าแบบจำลองตามข้อใด",
+    options: ["Open Systems Interconnection", "OSI Model", "Internet Model", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 1,
+    explanation: "เรียกอย่างเป็นทางการว่าแบบจำลอง OSI Model"
+  },
+  {
+    question: "22. กรอบการทำงานของแบบจำลอง OSI มีการแบ่งเป็นชั้นสื่อสารจำนวนกี่ชั้น",
+    options: ["5 ชั้น", "6 ชั้น", "7 ชั้น", "8 ชั้น"],
+    answer: 2,
+    explanation: "OSI Model มีทั้งหมด 7 เลเยอร์"
+  },
+  {
+    question: "23. ข้อใดต่อไปนี้ มิใช่ เป็นแนวความคิดในการแบ่งชั้นสื่อสารของแบบจำลอง OSI",
+    options: ["เพื่อลดความซับซ้อนลงและทำให้ง่ายต่อเรียนรู้", "เพื่อความสะดวกในการส่งผ่านข้อมูลที่รวดเร็ว", "เพื่อให้แต่ละชั้นสื่อสารมีบทบาทหน้าที่อย่างชัดเจนและแตกต่างกัน", "เพื่อป้องกันกรณีเกิดปัญหาที่ชั้นสื่อสารหนึ่งและส่งผลกระทบต่อชั้นสื่อสารอื่นๆ"],
+    answer: 3,
+    explanation: "การแบ่งชั้นไม่ได้มีจุดประสงค์หลักเพื่อป้องกันการส่งผลกระทบเมื่อเกิดปัญหา (เพราะแต่ละชั้นต้องทำงานพึ่งพากันตามลำดับ)"
+  },
+  {
+    question: "24. กรณีฝั่งส่งข้อมูล เมื่อมีการส่งผ่านข้อมูลบนแบบจำลอง OSI แล้ว จะเป็นไปตามลำดับชั้นสื่อสารตามข้อใด",
+    options: ["1-2-3-4-5-6-7", "1-2-3-7-4-5-6", "7-6-5-4-3-2-1", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 2,
+    explanation: "ฝั่งผู้ส่งจะเริ่มจากชั้นบนสุด (Application - Layer 7) ไล่ลงมาจนถึงชั้นล่างสุด (Physical - Layer 1)"
+  },
+  {
+    question: "25. บนแบบจำลอง OSI ชั้นสื่อสารใดส่งมอบข้อมูลในรูปแบบบิตข้อมูล",
+    options: ["Physical", "Data Link", "Network", "ถูกทุกข้อ"],
+    answer: 0,
+    explanation: "ชั้น Physical จะแปลงข้อมูลและส่งในรูปแบบระดับบิต (0, 1)"
+  },
+  {
+    question: "26. ข้อใดต่อไปนี้ เป็นการสื่อสารตามแนวดิ่งบนแบบจำลอง OSI",
+    options: ["Protocol", "Interface", "Peer-to-Peer Processes", "ไม่มีข้อถูก"],
+    answer: 1,
+    explanation: "การสื่อสารระหว่างชั้นที่อยู่ติดกัน (บน-ล่าง) จะเชื่อมต่อกันผ่าน Interface"
+  },
+  {
+    question: "27. ข้อใดต่อไปนี้ เป็นการสื่อสารชั้นเดียวกันระหว่างโฮสต์ต้นทางกับโฮสต์ปลายทางบนแบบจำลอง OSI",
+    options: ["Protocol", "Interface", "Layer", "ไม่มีข้อถูก"],
+    answer: 0,
+    explanation: "การสื่อสารแนวนอน (ชั้นเดียวกันระหว่างอุปกรณ์คนละตัว) จะใช้ Protocol ในการคุยกัน"
+  },
+  {
+    question: "28. การเคลื่อนย้ายข่าวสารจากชั้นสื่อสาร 7-6-5-4-3-2-1 บนแบบจำลอง OSI จะต้องดำเนินการตามข้อใด",
+    options: ["แต่ละชั้นสื่อสารจะต้องผนวกเฮดเดอร์ปะเข้าไปพร้อมกับข้อมูล", "ต้องสื่อสารผ่านลิงก์เพื่อส่งมอบข้อมูลไปยังปลายทาง", "จะมีการผนวกเทรลเลอร์เข้าไปเฉพาะชั้นสื่อสารดาต้าลิงก์", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 0,
+    explanation: "ฝั่งส่งจะต้องมีการเพิ่ม Header ของแต่ละชั้นเข้าไปในข้อมูล (ยกเว้น Data Link ที่อาจมี Trailer ด้วย)"
+  },
+  {
+    question: "29. จากข้อที่ 28 เราเรียกกระบวนการนี้ว่าอะไร",
+    options: ["OSI Model", "Encapsulation", "Decapsulation", "ไม่มีข้อถูก"],
+    answer: 1,
+    explanation: "กระบวนการห่อหุ้มข้อมูลและเติม Header เข้าไปเรียกว่า Encapsulation"
+  },
+  {
+    question: "30. ชั้นสื่อสารดาต้าลิงก์ ยังมีการแบ่งออกเป็น 2 ชั้นสื่อสารย่อย ซึ่งเป็นไปตามข้อใด",
+    options: ["IP และ TCP", "LLC และ MAC", "Physical และ Data Link", "Frame และ Packet"],
+    answer: 1,
+    explanation: "Data Link Layer แบ่งย่อยเป็น Logical Link Control (LLC) และ Media Access Control (MAC)"
+  },
+  {
+    question: "31. ชั้นสื่อสารใดบนแบบจำลอง OSI ทำหน้าที่เข้ารหัสข้อมูลและถอดรหัสข้อมูล",
+    options: ["Session", "Network", "Presentation", "Physical"],
+    answer: 2,
+    explanation: "Presentation Layer ทำหน้าที่แปลงรูปแบบ บีบอัด และเข้ารหัส/ถอดรหัสข้อมูล (Encryption/Decryption)"
+  },
+  {
+    question: "32. ข้อมูลที่จัดเก็บในรูปแบบของเฟรม (Frame) อยู่ในชั้นสื่อสารใดบนแบบจำลอง OSI",
+    options: ["Data Link", "Physical", "Network", "Application"],
+    answer: 0,
+    explanation: "PDU ของชั้น Data Link เรียกว่า เฟรม (Frame)"
+  },
+  {
+    question: "33. ชั้นสื่อสารใดบนแบบจำลอง OSI เกี่ยวข้องกับการกำหนดเส้นทางเพื่อส่งมอบข้อมูลข้ามเครือข่าย",
+    options: ["Physical", "Data Link", "Network", "Transport"],
+    answer: 2,
+    explanation: "Network Layer ทำหน้าที่หาเส้นทางที่ดีที่สุด (Routing) และระบุ IP Address"
+  },
+  {
+    question: "34. จากข้อที่ 33 หน่วยข้อมูลบนชั้นสื่อสารดังกล่าว เรียกว่าอะไร",
+    options: ["Message", "Packet", "Frame", "Segment"],
+    answer: 1,
+    explanation: "PDU ของชั้น Network เรียกว่า แพ็กเก็ต (Packet)"
+  },
+  {
+    question: "35. ชั้นสื่อสารใดบนแบบจำลอง OSI ที่โพรโทคอล TCP ประจำอยู่",
+    options: ["Physical", "Data Link", "Network", "Transport"],
+    answer: 3,
+    explanation: "TCP/UDP เป็นโพรโทคอลหลักที่ทำงานอยู่ในชั้น Transport Layer"
+  },
+  {
+    question: "36. จากข้อที่ 35 ในชั้นนี้จะมีการนำแอดเดรสเพื่อสื่อสารระหว่างโปรเซส อยากทราบว่าเป็นแอดเดรสประเภทใด",
+    options: ["IP Address", "MAC Address", "Port Address", "Logical Address"],
+    answer: 2,
+    explanation: "ชั้น Transport ใช้ Port Address ในการแยกแยะโปรเซสของแต่ละแอปพลิเคชัน"
+  },
+  {
+    question: "37. หากฝั่งส่งเป็นคอมพิวเตอร์ระดับเมนเฟรมที่ใช้รหัสแทนข้อมูลเป็น EBCDIC และฝั่งรับเป็นไมโครคอมพิวเตอร์ที่ใช้ ASCII เป็นรหัสแทนข้อมูล อยากทราบว่ากระบวนการนี้ชั้นสื่อสารใดเป็นผู้รับผิดชอบ",
+    options: ["Network", "Transport", "Application", "Presentation"],
+    answer: 3,
+    explanation: "การแปลงรูปแบบและรหัสข้อมูลให้ทั้งสองฝ่ายเข้าใจตรงกัน เป็นหน้าที่ของชั้น Presentation"
+  },
+  {
+    question: "38. ข้อดีของโพรโทคอล UDP เมื่อเทียบกับโพรโทคอล TCP คือข้อใด",
+    options: ["ส่งข้อมูลได้รวดเร็ว", "รับประกันการส่งข้อมูล", "มีความน่าเชื่อถือสูง", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 0,
+    explanation: "UDP เป็นโปรโตคอลที่ไม่ต้องสร้างการเชื่อมต่อก่อน จึงส่งข้อมูลได้รวดเร็วกว่า TCP"
+  },
+  {
+    question: "39. แบบจำลองอินเทอร์เน็ต (Internet Model) ในมุมมองแบบ Four-Layer ประกอบด้วยชั้นสื่อสารใด",
+    options: ["Physical, Data Link, Network, Transport", "Host-to-Network, Internet, Transport, Application", "Physical, Data Link, Transport, Application", "Host-to-Network, Transport, Presentation, Application"],
+    answer: 1,
+    explanation: "TCP/IP Model 4 ชั้น ได้แก่ Host-to-Network (หรือ Network Access), Internet, Transport, และ Application"
+  },
+  {
+    question: "40. บนแบบจำลองอินเทอร์เน็ต ในขณะที่เราใช้บริการ E-mail และ FTP อยู่ อยากทราบว่าเป็นการกระทำอยู่บนชั้นสื่อสารใด",
+    options: ["Network", "Transport", "Presentation", "Application"],
+    answer: 3,
+    explanation: "E-mail (SMTP) และ FTP เป็นบริการที่ทำงานอยู่ในชั้นบนสุดคือ Application Layer"
+  },
+
+  // ==========================================
+  // ข้อสอบบทที่ 3 (40 ข้อ)
+  // ==========================================
+  {
+    question: "41. เมื่อกล่าวถึงโครงสร้างเครือข่าย ในมุมมองการออกแบบเชิงกายภาพ จะเกี่ยวข้องกับข้อใด",
+    options: ["Physical Map", "Topology", "Network", "Backbone"],
+    answer: 1,
+    explanation: "โครงสร้างหรือรูปแบบการเชื่อมต่อเชิงกายภาพของเครือข่ายเรียกว่า Topology (โทโพโลยี)"
+  },
+  {
+    question: "42. การเชื่อมต่อเครือข่ายตามข้อใด ที่สามารถใช้แบนด์วิธในการสื่อสารระหว่างกันได้อย่างเต็มที่",
+    options: ["Point-to-Point", "Multi-Point", "Hub", "ถูกทุกข้อ"],
+    answer: 0,
+    explanation: "การเชื่อมต่อแบบ Point-to-Point (จุดต่อจุด) เป็นการเชื่อมต่อสายตรงระหว่าง 2 อุปกรณ์ จึงใช้แบนด์วิธได้อย่างเต็มที่โดยไม่ต้องแย่งกับใคร"
+  },
+  {
+    question: "43. สำนักงานแห่งหนึ่ง เชื่อมต่อเครือข่ายแลน โดยมีการแชร์เครื่องพิมพ์ให้กับคอมพิวเตอร์ 3 เครื่อง จัดเป็นการเชื่อมต่อเครือข่ายตามรูปแบบใด",
+    options: ["Point-to-Point", "Multi-Point", "Hubs", "ถูกทุกข้อ"],
+    answer: 1,
+    explanation: "การที่มีคอมพิวเตอร์หลายเครื่อง (มากกว่า 2) เข้ามาแชร์และใช้สื่อกลางร่วมกัน จัดเป็น Multi-Point"
+  },
+  {
+    question: "44. การเชื่อมต่อเครือข่ายตามรูปแบบใด ที่ใช้สายแกนหลักในการสื่อสารเพียงเส้นเดียว",
+    options: ["Bus", "Star", "Ring", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 0,
+    explanation: "Topology แบบ Bus จะใช้สายสัญญาณแกนหลักเพียงเส้นเดียว (Backbone) ในการให้ทุกโหนดเชื่อมต่อ"
+  },
+  {
+    question: "45. ข้อใดต่อไปนี้ มิใช่ ข้อดีของโทโพโลยีแบบบัส",
+    options: ["มีโครงสร้างไม่ซับซ้อน", "ประหยัดสายสื่อสาร", "เครือข่ายมีความคงทนสูง", "เพิ่มจำนวนสถานีได้ง่าย"],
+    answer: 2,
+    explanation: "แบบ Bus ไม่มีความคงทนสูง เพราะหากสายแกนหลักขาดเพียงจุดเดียว เครือข่ายจะล่มทั้งหมดทันที"
+  },
+  {
+    question: "46. โทโพโลยีแบบดาว มีจุดกำเนิดจากการใช้งานบนเครื่องคอมพิวเตอร์ตามข้อใด",
+    options: ["ซูเปอร์คอมพิวเตอร์", "เมนเฟรมคอมพิวเตอร์", "มินิคอมพิวเตอร์", "พีซีคอมพิวเตอร์"],
+    answer: 1,
+    explanation: "โทโพโลยีแบบ Star มีจุดเริ่มต้นมาจากการใช้เมนเฟรมคอมพิวเตอร์เป็นศูนย์กลางและมีเทอร์มินัลเชื่อมต่อเข้ามา"
+  },
+  {
+    question: "47. จากข้อที่ 46 ในปัจจุบันได้หันมาใช้อุปกรณ์ใดเป็นศูนย์กลางการรับส่งข้อมูล",
+    options: ["เครื่องพีซี", "การ์ดเครือข่าย", "เร้าเตอร์", "ฮับ"],
+    answer: 3,
+    explanation: "ในยุคของการสร้าง LAN แรกๆ จะใช้ Hub เป็นอุปกรณ์ศูนย์กลางในโทโพโลยีแบบดาว (ปัจจุบันถูกแทนด้วย Switch)"
+  },
+  {
+    question: "48. ข้อใดต่อไปนี้ เป็นคุณลักษณะของโทโพโลยีแบบวงแหวน",
+    options: ["แต่ละโหนดบนเครือข่าย จะเป็นเครื่องทวนสัญญาณในตัว", "โหนดแรกและโหนดสุดท้ายจะเชื่อมโยงถึงกัน ทำให้เกิดเป็นลูปเป็นวงกลม", "ทุกๆ โหนดในวงแหวน มีโอกาสส่งข้อมูลได้เท่าเทียมกัน", "ถูกทุกข้อ"],
+    answer: 3,
+    explanation: "คุณสมบัติทั้งหมดเป็นลักษณะเฉพาะของ Topology แบบ Ring"
+  },
+  {
+    question: "49. เครือข่ายตามข้อใด สามารถใช้เส้นทางการสื่อสารได้มากกว่าหนึ่งช่องทาง",
+    options: ["Bus", "Star", "Ring", "Mesh"],
+    answer: 3,
+    explanation: "Topology แบบ Mesh มีการเชื่อมต่อโยงใยถึงกัน ทำให้มีเส้นทางสำรองมากกว่าหนึ่งช่องทาง"
+  },
+  {
+    question: "50. กรณีมีการเชื่อมต่อคอมพิวเตอร์ 4 เครื่องบนเครือข่ายเมช หากมีการเชื่อมโยงอย่างเต็มรูปแบบ อยากทราบว่าต้องใช้สายสื่อสารจำนวนกี่เส้น",
+    options: ["4 เส้น", "5 เส้น", "6 เส้น", "1 เส้น"],
+    answer: 2,
+    explanation: "คำนวณจากสูตร n(n-1)/2 เมื่อ n=4 จะได้ 4(3)/2 = 6 เส้น"
+  },
+  {
+    question: "51. กรณีมีการเชื่อมต่อคอมพิวเตอร์ 10 เครื่องบนเครือข่ายบัส อยากทราบว่าต้องใช้สายสื่อสารจำนวนกี่เส้น",
+    options: ["1 เส้น", "5 เส้น", "10 เส้น", "11 เส้น"],
+    answer: 0,
+    explanation: "เครือข่ายแบบ Bus จะใช้สายสื่อสารหลักแกนเดียว (1 เส้น) ให้ทุกเครื่องเชื่อมเข้ามา"
+  },
+  {
+    question: "52. อุปกรณ์ที่นำมาใช้เป็นศูนย์รวมของทรัพยากรบนเครือข่าย เรียกว่าอะไร",
+    options: ["ฮับ", "เซิร์ฟเวอร์", "เร้าเตอร์", "แอกเซสพอยต์"],
+    answer: 1,
+    explanation: "เซิร์ฟเวอร์ (Server) ทำหน้าที่เป็นศูนย์รวมในการให้บริการและจัดการทรัพยากรต่างๆ บนเครือข่าย"
+  },
+  {
+    question: "53. ข้อใดต่อไปนี้ จัดเป็นแนวทางการเชื่อมต่อเครือข่ายแลนที่ประหยัดค่าใช้จ่ายมากที่สุด",
+    options: ["Peer-to-Peer", "Server-Based", "Direct Connect", "Router-Base"],
+    answer: 0,
+    explanation: "Peer-to-Peer ประหยัดที่สุดเพราะไม่ต้องลงทุนซื้อเครื่องเซิร์ฟเวอร์และระบบปฏิบัติการเครือข่ายราคาแพง"
+  },
+  {
+    question: "54. เครือข่ายชนิดใด มีระบบการจัดการความปลอดภัยที่ดี และสามารถขยายระบบได้ง่าย",
+    options: ["Peer-to-Peer", "Server-Based", "Direct Connect", "Router-Base"],
+    answer: 1,
+    explanation: "Server-Based (Client/Server) จะรวมศูนย์การจัดการความปลอดภัยไว้ที่เซิร์ฟเวอร์ และรองรับการขยายเครื่องลูกข่ายได้ดีกว่า"
+  },
+  {
+    question: "55. ข้อใดต่อไปนี้ กล่าวถูกต้อง",
+    options: ["เราสามารถนำเมลเซิร์ฟเวอร์เชื่อมต่อเข้ากับเครือข่ายแบบ Peer-to-Peer", "เครือข่ายแลนโดยทั่วไปแล้ว จะใช้เร้าเตอร์เป็นศูนย์กลางการรับส่งข้อมูล", "เครือข่ายแบบไคลเอ็นต์เซิร์ฟเวอร์สามารถเชื่อมต่อเครื่องลูกข่ายได้จำนวนมาก", "เครือข่ายแบบ Peer-to-Peer เชื่อมต่อใช้งานคอมพิวเตอร์ได้ไม่เกิน 3 เครื่อง"],
+    answer: 2,
+    explanation: "เครือข่ายแบบไคลเอ็นต์เซิร์ฟเวอร์ (Server-Based) ถูกออกแบบมาให้รองรับเครื่องลูกข่ายจำนวนมากได้อย่างมีประสิทธิภาพ"
+  },
+  {
+    question: "56. การ์ดเครือข่ายที่ใช้งานในปัจจุบัน มีพอร์ตเชื่อมต่อแบบใด",
+    options: ["RJ-11", "RG-58", "RJ-45", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 2,
+    explanation: "ปัจจุบันใช้พอร์ต RJ-45 สำหรับต่อสาย UTP (สายแลน) เป็นหลัก"
+  },
+  {
+    question: "57. โพรโทคอล IPX/SPX ถูกพัฒนาขึ้นโดยบริษัทใด",
+    options: ["Microsoft", "Novell", "Intel", "Oracle"],
+    answer: 1,
+    explanation: "IPX/SPX เป็นโพรโทคอลเก่าที่ถูกพัฒนาโดยบริษัท Novell เพื่อใช้กับระบบ NetWare"
+  },
+  {
+    question: "58. อยากทราบว่า ไมโครซอฟท์ได้ผนวกโพรโทคอล IPX/SPX บนระบบปฏิบัติการวินโดวส์ โดยใช้ชื่อตามข้อใด",
+    options: ["NETBUI", "IP", "TCP/IP", "NWLink"],
+    answer: 3,
+    explanation: "ไมโครซอฟท์สร้างโพรโทคอลชื่อ NWLink เพื่อให้วินโดวส์สามารถสื่อสารกับเครือข่าย Novell NetWare ได้"
+  },
+  {
+    question: "59. Active Directory เป็นระบบจัดการไดเร็กทอรีบนเครือข่ายจากค่ายใด",
+    options: ["Microsoft", "Novell", "Intel", "Oracle"],
+    answer: 0,
+    explanation: "Active Directory (AD) เป็นระบบของบริษัท Microsoft ที่มีอยู่ใน Windows Server"
+  },
+  {
+    question: "60. ระบบปฏิบัติการเครือข่ายตามข้อใด นิยมนำมาใช้ติดตั้งบนเครื่องระดับเมนเฟรม",
+    options: ["Novell", "Microsoft", "Unix", "Oracle"],
+    answer: 2,
+    explanation: "Unix เป็นระบบปฏิบัติการที่มีความเสถียรและประสิทธิภาพสูง จึงนิยมใช้บนเครื่องระดับเมนเฟรม"
+  },
+  {
+    question: "61. อุปกรณ์รีพีตเตอร์หรือฮับ ทำงานอยู่บนชั้นสื่อสารใดบนแบบจำลอง OSI",
+    options: ["Physical", "Data Link", "Network", "Application"],
+    answer: 0,
+    explanation: "Repeater และ Hub จัดการเพียงสัญญาณทางไฟฟ้า จึงทำงานอยู่ในชั้น Physical (Layer 1)"
+  },
+  {
+    question: "62. หน้าที่ของฮับ คือข้อใด",
+    options: ["เป็นอุปกรณ์ทวนสัญญาณ", "กระจายสัญญาณไปยังทุกพอร์ตที่เชื่อมต่อ", "เป็นศูนย์กลางของสายสื่อสารที่ทุกโหนดต้องเชื่อมต่อ", "ถูกทุกข้อ"],
+    answer: 3,
+    explanation: "ฮับเป็นศูนย์รวมสาย มีลักษณะทวนสัญญาณ และส่งกระจาย (Broadcast) ข้อมูลออกไปทุกพอร์ต"
+  },
+  {
+    question: "63. ข้อใดเป็นคุณสมบัติของแพตช์พาเนล (Patch Panel)",
+    options: ["เป็นฮับแบบแอกทีฟ", "เป็นฮับแบบพาสซีฟ", "เป็นเพียง Junction Point ไม่มีการทวนสัญญาณ", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 2,
+    explanation: "Patch Panel เป็นแค่จุดพักสายและเชื่อมต่อสาย (Junction Point) ไม่มีวงจรไฟฟ้าสำหรับทวนสัญญาณ"
+  },
+  {
+    question: "64. ข้อใดต่อไปนี้ กล่าวผิด",
+    options: ["รีพีตเตอร์เป็นอุปกรณ์ขยายสัญญาณเพื่อให้สัญญาณส่งไปได้ไกลขึ้น", "รีพีตเตอร์สามารถปรับแต่งสัญญาณที่สูญเสียให้กลับมาคงรูปเดิมได้", "ฮับที่ใช้งานโดยทั่วไป ส่วนใหญ่เป็นฮับแบบแอกทีฟ", "ฮับแบบพาสซีฟ จะไม่มีปลั๊กเสียบเข้าไฟบ้าน"],
+    answer: 1,
+    explanation: "รีพีตเตอร์จะขยายรวมถึงสิ่งที่ถูกรบกวน (Noise) เข้าไปด้วย จึงไม่สามารถปรับให้คงรูปเดิมได้สมบูรณ์หากสัญญาณเสื่อมสภาพไปแล้ว"
+  },
+  {
+    question: "65. การเชื่อมต่อเครือข่ายย่อยต่างๆ ด้วยอุปกรณ์ฮับ ส่งผลตามข้อใด",
+    options: ["เครือข่ายทั้งหมดจะอยู่ใน Collision Domain เดียวกัน", "เครือข่ายจะถูกแบ่งแยกเป็นคนละวงแลน", "ความรวดเร็วในการส่งข้อมูลในเครือข่ายสูงขึ้น", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 0,
+    explanation: "ฮับไม่สามารถแบ่งเซกเมนต์การชนกันของข้อมูลได้ การเชื่อมฮับหลายตัวจึงทำให้เครือข่ายใหญ่ขึ้นแต่อยู่ใน Collision Domain เดียวกัน"
+  },
+  {
+    question: "66. อุปกรณ์บริดจ์ (Bridge) ทำงานอยู่ชั้นสื่อสารใดตามแบบจำลอง OSI",
+    options: ["Physical", "Physical, Data Link", "Physical, Data Link, Network", "Application"],
+    answer: 1,
+    explanation: "บริดจ์ทำงานครอบคลุมชั้น Physical และ Data Link (Layer 1 และ 2)"
+  },
+  {
+    question: "67. ข้อแตกต่างระหว่างอุปกรณ์ฮับกับบริดจ์ คือข้อใด",
+    options: ["ฮับจะกระจายข้อมูลไปยังทุกๆ พอร์ต แต่บริดจ์จะกลั่นกรองข้อมูลไปยังเซกเมนต์ที่เกี่ยวข้องเท่านั้น", "ฮับเป็นอุปกรณ์ทวนสัญญาณในตัว แต่บริดจ์ไม่ใช่", "ฮับและบริดจ์ทำงานอยู่บนชั้นสื่อสาร 2 ชั้นแรกตามแบบจำลอง OSI", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 0,
+    explanation: "บริดจ์มีความฉลาดกว่าฮับ โดยจะอ่าน MAC Address เพื่อกลั่นกรองว่าจะส่งข้อมูลข้ามเซกเมนต์หรือไม่"
+  },
+  {
+    question: "68. อุปกรณ์สวิตช์ (Switch) ทำงานอยู่ชั้นสื่อสารใดบนแบบจำลอง OSI",
+    options: ["Physical", "Physical, Data Link", "Physical, Data Link, Network", "เป็นไปได้ทั้งข้อ ข. และ ค."],
+    answer: 1,
+    explanation: "โดยพื้นฐานสวิตช์คือบริดจ์ที่มีหลายพอร์ต จึงทำงานอยู่ในชั้น Physical และ Data Link (Layer 2)"
+  },
+  {
+    question: "69. อุปกรณ์เร้าเตอร์ ทำงานอยู่ชั้นสื่อสารใดบนแบบจำลอง OSI",
+    options: ["Physical", "Physical, Data Link", "Physical, Data Link, Network", "Application"],
+    answer: 2,
+    explanation: "เร้าเตอร์อ่าน IP Address ในการกำหนดเส้นทาง จึงทำงานครอบคลุมถึงชั้น Network (Layer 1, 2 และ 3)"
+  },
+  {
+    question: "70. กรณีเครือข่ายมีการเชื่อมต่อคอมพิวเตอร์ระดับเมนเฟรม จำเป็นต้องใช้อุปกรณ์ใดเข้ามาช่วย เพื่อให้คอมพิวเตอร์ระดับพีซีบนเครือข่าย สามารถสื่อสารร่วมกันได้อย่างไม่เป็นปัญหา",
+    options: ["Bridge", "Switch", "Router", "Gateway"],
+    answer: 3,
+    explanation: "Gateway เป็นอุปกรณ์ที่ใช้แปลงโปรโตคอลและโครงสร้างสถาปัตยกรรมที่ต่างกันมากๆ ให้คุยกันรู้เรื่อง"
+  },
+  {
+    question: "71. บริดจ์หรือสวิตช์สามารถส่งข้อมูลไปยังโหนดปลายทางเฉพาะได้ ด้วยการใช้สิ่งใด",
+    options: ["Logical Address", "Physical Address", "IP Address", "TCP/IP"],
+    answer: 1,
+    explanation: "Switch และ Bridge ตัดสินใจส่งข้อมูลโดยดูจาก Physical Address (MAC Address) ซึ่งอยู่บนการ์ดเครือข่าย"
+  },
+  {
+    question: "72. ข้อใดต่อไปนี้ ไม่เกี่ยวข้องกับเทคโนโลยีเครือข่ายท้องถิ่น",
+    options: ["Ethernet", "Token Ring", "FDDI", "Packet Switching"],
+    answer: 3,
+    explanation: "Packet Switching เป็นรูปแบบการเชื่อมต่อของเครือข่ายบริเวณกว้าง (WAN)"
+  },
+  {
+    question: "73. คุณสมบัติเด่นของเครือข่ายท้องถิ่น (LAN) คือข้อใด",
+    options: ["เป็นเครือข่ายที่ใช้สื่อสารระยะใกล้", "เป็นเครือข่ายที่ส่งข้อมูลด้วยความเร็วสูง อัตราการผิดพลาดในการส่งข้อมูลต่ำ", "เป็นเครือข่ายที่เชื่อมต่อระยะไกลข้ามทวีปได้", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 3,
+    explanation: "LAN ครอบคลุมพื้นที่ใกล้ๆ จึงมีความเร็วสูงและเสถียรภาพดี ไม่สามารถเชื่อมข้ามทวีปได้"
+  },
+  {
+    question: "74. ข้อใดต่อไปนี้ มิใช่ เป็นคุณสมบัติของเครือข่ายระดับเมือง (MAN)",
+    options: ["เป็นเครือข่ายที่สนับสนุนระบบเรียลไทม์", "เป็นเครือข่ายที่มีระบบทดแทนเพื่อกู้คืนระบบได้อย่างรวดเร็ว", "เป็นเครือข่ายที่เชื่อมต่อด้วยโทโพโลยีแบบดาว", "เป็นเครือข่ายที่ครอบคลุมพื้นที่ตามเขตเมืองและจังหวัด"],
+    answer: 0,
+    explanation: "เครือข่าย MAN ไม่ได้รับประกันเรื่องการสนับสนุนระบบ Real-time เป็นพิเศษเสมอไป"
+  },
+  {
+    question: "75. ข้อใดเป็นคุณสมบัติของเครือข่ายระดับประเทศ (WAN)",
+    options: ["เป็นเครือข่ายที่ครอบคลุมพื้นที่ระดับประเทศหรือทวีป", "เป็นเครือข่ายที่สามารถขยายจำนวนสถานีได้ไม่จำกัด", "เป็นเครือข่ายที่ใช้เทคนิคการส่งข้อมูลแบบสวิตชิ่ง", "ถูกทุกข้อ"],
+    answer: 3,
+    explanation: "WAN ครอบคลุมพื้นที่กว้างใหญ่ ขยายได้เรื่อยๆ และอาศัยเทคโนโลยีสวิตชิ่งจาก ISP"
+  },
+  {
+    question: "76. อุปกรณ์ใดต่อไปนี้ เปรียบเสมือนกับโปรเซสเซอร์ตัวหนึ่งที่ทำงานด้วยความเร็วสูง และยังเป็นอุปกรณ์สำคัญ ของเครือข่ายสวิตชิ่ง",
+    options: ["Bridge", "Packet Switches", "Switching Hub", "Gateways"],
+    answer: 1,
+    explanation: "Packet Switch เป็นอุปกรณ์หัวใจสำคัญในการสลับแพ็กเก็ตข้อมูลของเครือข่าย WAN"
+  },
+  {
+    question: "77. อุปกรณ์ใดต่อไปนี้ มีลักษณะการทำงานในรูปแบบเก็บแล้วส่งต่อ (Store and Forward)",
+    options: ["Hubs", "Switches", "Packet Switches", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 3,
+    explanation: "ทั้ง Switches ภายใน LAN และ Packet Switches ภายใน WAN ต่างก็มีหลักการทำงานแบบรับเข้ามาเก็บไว้ เช็คความถูกต้อง แล้วค่อยส่งต่อ"
+  },
+  {
+    question: "78. เครือข่ายตามข้อใด เวลาส่งข้อมูลจะถือครองเส้นทางตลอดระยะเวลาที่มีการสื่อสาร",
+    options: ["Circuit Switching", "Message Switching", "Packet Switching", "ไม่มีข้อถูก"],
+    answer: 0,
+    explanation: "Circuit Switching จะจองเส้นทางไว้ใช้แต่เพียงผู้เดียวจนกว่าจะสื่อสารเสร็จ (เช่น โทรศัพท์แบบเก่า)"
+  },
+  {
+    question: "79. เครือข่ายตามข้อใด จะถือครองเส้นทางในการส่งข้อมูลช่วงเวลาหนึ่งเท่านั้น ไม่ได้จับจองตลอดระยะเวลาสื่อสาร ทำให้ผู้อื่นสามารถใช้เส้นทางนี้ในการลำเลียงข้อมูลได้",
+    options: ["Circuit Switching", "Message Switching", "Packet Switching", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 2,
+    explanation: "Packet Switching จะแบ่งข้อมูลเป็นชิ้นเล็กๆ แล้วแทรกตัวส่ง ทำให้แชร์เส้นทางร่วมกับผู้อื่นได้"
+  },
+  {
+    question: "80. เครือข่ายตามข้อใด จะสร้างวงจรสมมติขึ้นมา เสมือนกับเป็นเส้นทางจริงเพื่อเชื่อมโยงจากต้นทางไปยังปลายทาง",
+    options: ["Circuit Switching", "Message Switching", "TCP/IP", "Virtual-Circuit"],
+    answer: 3,
+    explanation: "เครือข่ายแบบ Virtual-Circuit จะจำลองเส้นทางขึ้นมาเหมือนเป็นเส้นทางจริง แต่จริงๆ แล้วเป็นการทำงานร่วมกันของโหนดสวิตช์"
+  },
+
+  // ==========================================
+  // ข้อสอบบทที่ 4 (25 ข้อ)
+  // ==========================================
+  {
+    question: "81. ข้อใดกล่าวได้ถูกต้อง",
+    options: ["ข้อมูลสามารถเป็นได้ทั้งข้อมูลแอนะล็อกหรือข้อมูลดิจิทัล", "ข้อมูลต้นฉบับที่จะส่งในระบบสื่อสาร สามารถแปลงมาเป็นสัญญาณดิจิทัลได้เท่านั้น", "สัญญาณสามารถเป็นได้ทั้งสัญญาณแอนะล็อกหรือสัญญาณดิจิทัล", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 3,
+    explanation: "ข้อมูลและสัญญาณมีทั้งรูปแบบแอนะล็อก (ต่อเนื่อง) และดิจิทัล (ไม่ต่อเนื่อง)"
+  },
+  {
+    question: "82. คลื่นที่มีลักษณะแกว่งขึ้นลงลักษณะต่อเนื่องและราบเรียบตลอดเวลา เป็นคุณสมบัติของสัญญาณอะไร",
+    options: ["สัญญาณไฟฟ้า", "สัญญาณแอนะล็อก", "สัญญาณดิจิทัล", "เป็นไปได้ทุกข้อ"],
+    answer: 1,
+    explanation: "คลื่นที่มีความต่อเนื่อง (Continuous) และราบเรียบคือลักษณะของสัญญาณแอนะล็อก"
+  },
+  {
+    question: "83. ระดับสัญญาณ สามารถอยู่ในช่วงระหว่างค่าต่ำสุดถึงค่าสูงสุดของลูกคลื่นได้ จัดเป็นคลื่นสัญญาณชนิดใด",
+    options: ["สัญญาณแอนะล็อก", "สัญญาณดิจิทัล", "สัญญาณข้อมูล", "สัญญาณคอมพิวเตอร์"],
+    answer: 0,
+    explanation: "สัญญาณแอนะล็อกสามารถมีค่าต่างๆ ได้ไม่จำกัดในช่วงที่กำหนด"
+  },
+  {
+    question: "84. เป็นคลื่นแบบไม่ต่อเนื่อง สัญญาณสามารถเปลี่ยนแปลงแบบก้าวกระโดด เป็นคลื่นสัญญาณตามข้อใด",
+    options: ["สัญญาณแอนะล็อก", "สัญญาณดิจิทัล", "สัญญาณข้อมูล", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 1,
+    explanation: "สัญญาณดิจิทัลมีค่าเฉพาะเจาะจง (เช่น 0 กับ 1) ทำให้กราฟมีลักษณะก้าวกระโดดแบบไม่ต่อเนื่อง"
+  },
+  {
+    question: "85. ข้อใดต่อไปนี้เกี่ยวข้องกับสัญญาณแอนะล็อก",
+    options: ["Periodic", "Aperiodic", "Nonperiodic", "Bit Rate"],
+    answer: 0,
+    explanation: "สัญญาณแอนะล็อกมักจะมีลักษณะเป็นคาบ (Periodic) คือมีการทำซ้ำรูปแบบเดิมในกรอบเวลา"
+  },
+  {
+    question: "86. ข้อใดต่อไปนี้เกี่ยวข้องกับสัญญาณดิจิทัล",
+    options: ["Nonperiodic", "Bit Interval", "Bit Rate", "ถูกทุกข้อ"],
+    answer: 3,
+    explanation: "สัญญาณดิจิทัลใช้การวัดแบบ Bit Rate และ Bit Interval และมักไม่มีรูปแบบคาบที่ตายตัว (Nonperiodic)"
+  },
+  {
+    question: "87. เหตุใดการจำแนกสัญญาณรบกวนออกจากสัญญาณแอนะล็อกจึงยากกว่าแบบดิจิทัล",
+    options: ["เพราะสัญญาณแอนะล็อกจะถูกแทนที่ด้วยสัญญาณรบกวนโดยทันที", "สัญญาณแอนะล็อกถูกออกแบบมาเพื่อปราศจากสัญญาณรบกวน", "เพราะข้อมูลกับสัญญาณรบกวนจะถูกผสมรวมเข้าด้วยกัน", "เป็นไปได้ทุกข้อ"],
+    answer: 2,
+    explanation: "สัญญาณแอนะล็อกรับค่าได้ทุกระดับ เมื่อมี Noise เข้ามาจึงผสมรวมกับรูปคลื่นเดิม ทำให้แยกออกได้ยาก"
+  },
+  {
+    question: "88. สัญญาณแอนะล็อกมีส่วนประกอบพื้นฐานอะไรบ้าง",
+    options: ["Signal / Analog / Digital", "Amplitude / Frequency / Phase", "Volt / Amp / Watt", "Data / Signal"],
+    answer: 1,
+    explanation: "คุณสมบัติพื้นฐาน 3 ประการคือ ความแรง (Amplitude), ความถี่ (Frequency) และเฟส (Phase)"
+  },
+  {
+    question: "89. การวัดค่าจากแรงดันไฟฟ้า ที่วัดจากลูกคลื่นจุดสูงสุดและต่ำสุด เป็นไปตามข้อใด",
+    options: ["Signal", "Amplitude", "Frequency", "ผิดทุกข้อ"],
+    answer: 1,
+    explanation: "ความสูงหรือความแรงของคลื่นเรียกว่า Amplitude"
+  },
+  {
+    question: "90. จากข้อที่ 89 อยากทราบว่าใช้หน่วยวัดตามข้อใด",
+    options: ["Volt", "Amp", "Watt", "ถูกทุกข้อ"],
+    answer: 0,
+    explanation: "Amplitude มักวัดเป็นหน่วยแรงดันไฟฟ้า (Volt)"
+  },
+  {
+    question: "91. ความถี่ (Frequency) ใช้หน่วยวัดตามข้อใด",
+    options: ["Volt", "Hertz", "Megahertz", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 3,
+    explanation: "ความถี่วัดรอบของคลื่นใน 1 วินาที เป็นหน่วย Hertz (Hz) หรือสามารถเป็นหน่วยขยายตัวเช่น Megahertz"
+  },
+  {
+    question: "92. ระบบคลื่นวิทยุ AM และ FM เป็นตัวอย่างของการมอดูเลตตามรูปแบบใด",
+    options: ["digital-to-digital", "digital-to-analog", "analog-to-analog", "analog-to-digital"],
+    answer: 2,
+    explanation: "เป็นเทคนิคการแปลงสัญญาณเสียง (แอนะล็อก) ให้ส่งไปกับคลื่นวิทยุ (แอนะล็อก)"
+  },
+  {
+    question: "93. คลื่นใดต่อไปนี้มีความถี่สูง สามารถนำไปรวมเข้ากับสัญญาณข้อมูลเพื่อส่งออกไปยังสื่อกลางได้ระยะไกลขึ้น",
+    options: ["คลื่นความถี่", "คลื่นพาหะ", "คลื่นแอนะล็อก", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 1,
+    explanation: "คลื่นพาหะ (Carrier Signal) ทำหน้าที่บรรทุกสัญญาณข้อมูลให้ส่งผ่านอากาศไปได้ไกลๆ"
+  },
+  {
+    question: "94. การเข้ารหัสด้วยวิธีใด เป็นวิธีแบบตรงไปตรงมา โดยสัญญาณจะเปลี่ยนไปตามสถานะของบิตข้อมูล",
+    options: ["NRZ-L", "NRZ-I", "Manchester", "Differential Manchester"],
+    answer: 0,
+    explanation: "NRZ-L กำหนดสถานะตายตัว เช่น 0 คือค่าหนึ่ง และ 1 คืออีกค่าหนึ่งโดยตรง"
+  },
+  {
+    question: "95. การเข้ารหัสด้วยวิธีใด นิยมนำมาใช้บนเครือข่ายแลนอีเทอร์เน็ต",
+    options: ["NRZ-L/NRZ-I", "Manchester", "Differential Manchester", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 1,
+    explanation: "เทคนิค Manchester Encoding ได้รับความนิยมสูงในการส่งข้อมูลระดับ Data Link / Physical ในมาตรฐาน LAN เก่า"
+  },
+  {
+    question: "96. อุปกรณ์ใดต่อไปนี้ ทำหน้าที่แปลงสัญญาณดิจิทัลมาเป็นสัญญาณแอนะล็อก เพื่อส่งผ่านระบบสื่อสารโทรศัพท์",
+    options: ["แอมปลิไฟเออร์", "รีพีตเตอร์", "โมเด็ม", "สายเคเบิล"],
+    answer: 2,
+    explanation: "โมเด็ม (Modem ย่อมาจาก Modulator-Demodulator) ใช้แปลงสัญญาณระหว่างดิจิทัลและแอนะล็อก"
+  },
+  {
+    question: "97. หน่วยวัดความเร็วในการส่งข้อมูลตามข้อใด เกี่ยวข้องกับแบนด์วิดธ์ในระบบสื่อสาร",
+    options: ["Bit Rate", "Baud Rate", "Transfer Rate", "Throughput"],
+    answer: 1,
+    explanation: "Baud Rate คืออัตราการเปลี่ยนสถานะสัญญาณต่อวินาที ซึ่งสัมพันธ์กับความสามารถในการรองรับ Bandwidth ของสื่อกลาง"
+  },
+  {
+    question: "98. จากสัญญาณแอนะล็อกที่ได้รับการมอดูเลตดังรูป อยากทราบว่ามีการเปลี่ยนแปลงของอะไร",
+    options: ["Hertz", "Frequency", "Amplitude", "Noise"],
+    answer: 2,
+    explanation: "ลักษณะกราฟ AM (Amplitude Modulation) จะมีความสูงของคลื่นหรือแอมพลิจูดที่เปลี่ยนแปลงไป"
+  },
+  {
+    question: "99. จากสัญญาณดิจิทัลดังรูป อยากทราบว่าสัญญาณดังกล่าวส่งข้อมูลที่ความเร็วเท่าไร",
+    options: ["8 bit", "8 bps", "8 byte", "ผิดทุกข้อ"],
+    answer: 1,
+    explanation: "การส่งข้อมูล 8 บิตในเวลา 1 วินาที ถือว่ามีความเร็ว 8 bits per second (bps)"
+  },
+  {
+    question: "100. รหัสข้อมูลตามข้อใด นิยมใช้บนเครื่องพีซี",
+    options: ["EBCDIC", "ASCII", "Unicode", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 1,
+    explanation: "รหัส ASCII เป็นมาตรฐานแรกๆ ที่นิยมใช้งานแทนตัวอักษรภาษาอังกฤษในคอมพิวเตอร์ทั่วไป"
+  },
+  {
+    question: "101. คลื่นสัญญาณหลายๆ คลื่นถูกส่งลงในสื่อกลาง แล้วเกิดการรวมตัวของสัญญาณขึ้น ทำให้สัญญาณผิดเพี้ยนไปจากรูปเดิม เป็นความสูญเสียของสัญญาณจากปัจจัยใด",
+    options: ["Attenuation", "Distortion", "Thermal Noise", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 1,
+    explanation: "การบิดเบี้ยวผิดเพี้ยนของรูปคลื่นสัญญาณเรียกว่า Distortion"
+  },
+  {
+    question: "102. เหตุการณ์ธรรมชาติอย่างฟ้าผ่า จะก่อให้เกิดสัญญาณรบกวนในรูปแบบใด",
+    options: ["Impulse Noise", "Thermal Noise", "Echo", "Jitter"],
+    answer: 0,
+    explanation: "ฟ้าผ่า หรือไฟกระชากทำให้เกิด Noise กะทันหันที่รุนแรง เรียกว่า Impulse Noise"
+  },
+  {
+    question: "103. สัญญาณที่ส่งไปมีการสะท้อนกลับ ทำให้โหนดที่ต้องการส่งข้อมูลพลันนึกว่าสายส่งในขณะนั้นไม่ว่าง จัดเป็นสัญญาณรบกวนตามข้อใด",
+    options: ["Impulse Noise", "Thermal Noise", "Echo", "Jitter"],
+    answer: 2,
+    explanation: "การสะท้อนกลับของสัญญาณในสายส่งคือ Echo"
+  },
+  {
+    question: "104. เลิศชายกำลังสนทนาผ่านโทรศัพท์กับเพื่อนอยู่ แล้วได้ยินเสียงจากคู่สนทนาอื่นแทรกเข้ามา เป็นสัญญาณรบกวนประเภทใด",
+    options: ["Thermal Noise", "Crosstalk", "Echo", "Jitter"],
+    answer: 1,
+    explanation: "การเหนี่ยวนำข้ามเส้นหรือสัญญาณจากสายข้างเคียงแทรกเข้ามาเรียกว่า Crosstalk"
+  },
+  {
+    question: "105. ข้อใดต่อไปนี้ เป็นการป้องกันสัญญาณรบกวน",
+    options: ["ใช้สายสื่อสารที่มีฉนวนป้องกันสัญญาณรบกวน", "เลือกซื้อสายสื่อสารที่มีราคาแพงเท่านั้น", "เลือกใช้การส่งข้อมูลระยะไกลแบบ Leased Line", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 0,
+    explanation: "การใช้สายที่มีฉนวนหุ้มป้องกัน (Shielded) เป็นวิธีพื้นฐานในการกันคลื่นแม่เหล็กไฟฟ้ารบกวน"
+  },
+
+  // ==========================================
+  // ข้อสอบบทที่ 5 (30 ข้อ)
+  // ==========================================
+  {
+    question: "106. ข้อใดต่อไปนี้ มิใช่คุณสมบัติของสัญญาณดิจิทัล",
+    options: ["มีอัตราความเร็วในการส่งข้อมูลสูง", "ไม่ได้รับผลกระทบใดๆ จากสัญญาณรบกวน", "สามารถเข้ารหัสสัญญาณในรูปแบบต่างๆ ได้", "ทุกข้อล้วนเป็นคุณสมบัติของสัญญาณดิจิทัล"],
+    answer: 1,
+    explanation: "ถึงแม้สัญญาณดิจิทัลจะทนทานกว่า แต่ก็ยังคง 'ได้รับผลกระทบ' จากสัญญาณรบกวนได้หากรุนแรงเกินไป"
+  },
+  {
+    question: "107. ข้อใดต่อไปนี้ เป็นการส่งข้อมูลแบบขนาน",
+    options: ["การส่งงานไปพิมพ์ที่เครื่องพิมพ์ผ่านพอร์ต LPT1", "การส่งงานไปพิมพ์ที่เครื่องพิมพ์ผ่านพอร์ต Serial", "การสื่อสารข้อมูลบนระบบเครือข่าย", "ถูกทุกข้อ"],
+    answer: 0,
+    explanation: "พอร์ต LPT1 (Line Printer Terminal) เป็นเทคโนโลยีเก่าที่ใช้การส่งข้อมูลแบบขนาน"
+  },
+  {
+    question: "108. การส่งข้อมูลแบบอนุกรม ตรงกับคุณสมบัติตามข้อใด",
+    options: ["ส่งข้อมูลด้วยความเร็วสูง", "ประหยัดสายสื่อสาร", "สามารถส่งข้อมูลได้ระยะไกล", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 3,
+    explanation: "การส่งข้อมูลแบบอนุกรม (Serial) ใช้สายสัญญาณน้อยเส้น ทำให้ส่งได้ระยะทางไกลและประหยัดกว่า"
+  },
+  {
+    question: "109. การส่งข้อมูลแบบอนุกรมตามวิธีใด จะส่งบิตเริ่มและบิตจบไปพร้อมกับข้อมูลแต่ละไบต์",
+    options: ["Asynchronous", "Synchronous", "Isochronous", "Parallel Transmission"],
+    answer: 0,
+    explanation: "แบบ Asynchronous ต้องใช้ Start bit และ Stop bit กำกับไว้ในแต่ละตัวอักษรเพื่อบอกจังหวะ"
+  },
+  {
+    question: "110. การส่งข้อมูลแบบอนุกรมตามข้อใด จะรวมกลุ่มข้อมูลในรูปแบบเฟรม",
+    options: ["Asynchronous", "Synchronous", "Isochronous", "Parallel Transmission"],
+    answer: 1,
+    explanation: "แบบ Synchronous จะใช้ Clock อ้างอิงร่วมกัน และส่งข้อมูลต่อเนื่องกันมาเป็นบล็อกหรือเฟรมขนาดใหญ่"
+  },
+  {
+    question: "111. การส่งข้อมูลแบบอนุกรมตามข้อใด ที่รับประกันความเร็วในการถ่ายโอนข้อมูลตั้งแต่เริ่มต้นจนจบกระบวนการ",
+    options: ["Asynchronous", "Synchronous", "Isochronous", "Parallel Transmission"],
+    answer: 2,
+    explanation: "Isochronous รับประกันความเร็วและระยะเวลาในการส่งข้อมูลให้คงที่ มักใช้ในงาน Real-time"
+  },
+  {
+    question: "112. อุปกรณ์ DTE ตามข้อใด สามารถใช้แทนได้ทั้งแหล่งข้อมูลต้นทางและปลายทาง",
+    options: ["คอมพิวเตอร์", "โมเด็ม", "เครื่องพิมพ์", "จอภาพ"],
+    answer: 0,
+    explanation: "DTE (Data Terminal Equipment) ทำหน้าที่เป็นจุดกำเนิดและรับข้อมูล ซึ่งคอมพิวเตอร์ตอบโจทย์นี้ทั้งหมด"
+  },
+  {
+    question: "113. อุปกรณ์ DCE ปกติแล้ว มักหมายถึงอุปกรณ์ใด",
+    options: ["คอมพิวเตอร์", "โมเด็ม", "เครื่องพิมพ์", "จอภาพ"],
+    answer: 1,
+    explanation: "DCE (Data Circuit-terminating Equipment) ทำหน้าที่เป็นตัวกลางแปลงสัญญาณ เช่น โมเด็ม"
+  },
+  {
+    question: "114. รูปทรงและขนาดของคอนเน็กเตอร์ ตรงกับมาตรฐานอินเตอร์เฟซตามข้อกำหนดใด",
+    options: ["ข้อกำหนดทางกลไก", "ข้อกำหนดทางไฟฟ้า", "ข้อกำหนดด้านฟังก์ชันการทำงาน", "ข้อกำหนด้านขั้นตอนการทำงาน"],
+    answer: 0,
+    explanation: "รูปร่าง จำนวนพิน และขนาดหัวต่อ จัดเป็น Mechanical Specification (ข้อกำหนดทางกลไก)"
+  },
+  {
+    question: "115. ข้อกำหนดตามข้อใด เกี่ยวข้องกับหน้าที่ของหัวเข็มแต่ละหัวว่า จะต้องส่งสัญญาณอะไรออกไปบ้าง",
+    options: ["ข้อกำหนดทางกลไก", "ข้อกำหนดทางไฟฟ้า", "ข้อกำหนดด้านฟังก์ชันการทำงาน", "ข้อกำหนด้านขั้นตอนการทำงาน"],
+    answer: 2,
+    explanation: "การกำหนดหน้าที่เฉพาะเจาะจงของแต่ละขาพิน เรียกว่า Functional Specification"
+  },
+  {
+    question: "116. การควบคุมจังหวะและการแลกเปลี่ยนข้อมูลระหว่างอุปกรณ์ DTE และ DCE ตรงตามข้อกำหนดใด",
+    options: ["ข้อกำหนดทางกลไก", "ข้อกำหนดทางไฟฟ้า", "ข้อกำหนดด้านฟังก์ชันการทำงาน", "ข้อกำหนด้านขั้นตอนการทำงาน"],
+    answer: 3,
+    explanation: "ลำดับการทำงาน ใครควรส่งก่อนหลัง จัดอยู่ในหมวด Procedural Specification"
+  },
+  {
+    question: "117. ปลั๊กเชื่อมต่อ EIA-232 ตามข้อกำหนดทางกลไก ตรงตามรูปแบบใด",
+    options: ["DB-25", "DB-9", "DB-12 pin", "เป็นไปได้ทั้งข้อ ก. และ ข."],
+    answer: 3,
+    explanation: "พอร์ต RS-232 มีทั้งรูปแบบ 9 ขา (DB-9) และ 25 ขา (DB-25)"
+  },
+  {
+    question: "118. การถ่ายโอนข้อมูล บน EIA-232 เกี่ยวข้องกับกลุ่มเซอร์กิตตามข้อใด",
+    options: ["Ground", "Data", "Control", "Timing"],
+    answer: 1,
+    explanation: "สายขา TX และ RX ถูกจัดอยู่ในกลุ่ม Data Circuit สำหรับถ่ายโอนข้อมูลโดยเฉพาะ"
+  },
+  {
+    question: "119. การเชื่อมต่อแบบนัลโมเด็ม ตรงกับรูปแบบการเชื่อมต่อเพื่อถ่ายโอนข้อมูลตามข้อใด",
+    options: ["การเชื่อมต่อระหว่างอุปกรณ์ DTE-DCE", "การเชื่อมต่อระหว่างอปุกรณ์ DTE-DTE", "การเชื่อมต่อระหว่างเครื่องคอมพิวเตอร์", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 1,
+    explanation: "สาย Null Modem ใช้เพื่อเชื่อมต่อระหว่าง DTE สองตัวเข้าด้วยกันโดยตรง โดยไม่ต้องมี DCE คั่น"
+  },
+  {
+    question: "120. การเชื่อมต่อแบบนัลโมเด็ม มีข้อจำกัดบนระยะทางเท่าไร",
+    options: ["ไม่ขึ้นกับระยะทาง", "ไม่เกิน 50 เมตร", "ไม่เกิน 50 ฟุต", "ไม่มีข้อถูก"],
+    answer: 2,
+    explanation: "จำกัดระยะทางสูงสุดตามมาตรฐาน RS-232 ที่ประมาณ 15 เมตร หรือ 50 ฟุต"
+  },
+  {
+    question: "121. คอนเน็กเตอร์ EIA-232 ที่นำมาใช้กับนัลโมเด็ม ตรงขั้วต่อตรงตามลักษณะใด",
+    options: ["เป็นซ็อกเก็ตแบบตัวเมียทั้งสองฝั่ง", "แบบซ็อกเก็ตและหัวเข็ม", "หัวเข็มทั้งสองฝั่ง", "เป็นแบบใดก็ได้"],
+    answer: 0,
+    explanation: "เนื่องจากเครื่องคอมพิวเตอร์ (DTE) จะเป็นหัวเสียบตัวผู้ ดังนั้นสายจึงต้องเป็นหัวตัวเมียทั้งสองด้าน"
+  },
+  {
+    question: "122. สายเคเบิลตามมาตรฐาน EIA-232 ที่นำมาใช้เป็นสายนัลโมเด็มนั้น มี pin ใดบ้างที่ต้องนำมาไขว้สายกัน",
+    options: ["pin 1 และ 2", "pin 2 และ 3", "pin 3 และ 4", "pin 4 และ 5"],
+    answer: 1,
+    explanation: "Pin 2 (RX) และ Pin 3 (TX) จำเป็นต้องสลับไขว้กันเพื่อให้ส่งข้อมูลถึงกันได้"
+  },
+  {
+    question: "123. ข้อใดต่อไปนี้ ไม่เกี่ยวข้องกับซอฟต์แวร์สื่อสารบนนัลโมเด็ม",
+    options: ["Laplink", "Norton Commander", "FileVan", "iLink"],
+    answer: 3,
+    explanation: "iLink เป็นคำเรียกมาตรฐานพอร์ต FireWire ของทางฝั่ง Sony ซึ่งไม่เกี่ยวข้องกับซอฟต์แวร์สาย RS-232"
+  },
+  {
+    question: "124. FireWire เป็นสายส่งข้อมูลความเร็วสูง ที่ตรงกับมาตรฐานใด",
+    options: ["IEEE 802.2", "IEEE 802.3", "IEEE 1594", "IEEE 1394"],
+    answer: 3,
+    explanation: "มาตรฐานอย่างเป็นทางการของ FireWire ถูกกำหนดโดยสถาบัน IEEE หมายเลข 1394"
+  },
+  {
+    question: "125. FireWire เป็นชื่อจดทะเบียนการค้าของบริษัทใด",
+    options: ["แอปเปิลคอมพิวเตอร์", "ไมโครซอฟท์", "โซนี่", "ถูกทั้งข้อ ก. และ ข."],
+    answer: 0,
+    explanation: "Apple เป็นผู้จดทะเบียนเครื่องหมายการค้าและเป็นผู้พัฒนาหลักของ FireWire"
+  },
+  {
+    question: "126. FireWire สนับสนุนการเชื่อมต่อในรูปแบบใด",
+    options: ["Synchronous", "Asynchronous", "Isochronous", "ถูกทั้งข้อ ข. และ ค."],
+    answer: 3,
+    explanation: "สามารถส่งข้อมูลได้ทั้งแบบ Asynchronous (งานทั่วไป) และ Isochronous (งานเสียง/วิดีโอแบบเรียลไทม์)"
+  },
+  {
+    question: "127. ขณะที่สายส่งข้อมูลยังคงทำงานอยู่ และยังถอดสายเคเบิลออกจากอุปกรณ์ได้ เราเรียกกระบวนการนี้ว่าอะไร",
+    options: ["Hot Plug", "Hot Pot", "Recycle", "Synchronization"],
+    answer: 0,
+    explanation: "ความสามารถในการเสียบและถอดอุปกรณ์ได้ทันทีโดยไม่ต้องปิดเครื่องเรียกว่า Hot Plug หรือ Hot Swappable"
+  },
+  {
+    question: "128. กรณีมีการเชื่อมต่อสาย USB ต่างเวอร์ชัน ซึ่งมีความเร็วแตกต่างกัน จะส่งผลตามข้อใด",
+    options: ["ความเร็วจะเร็วขึ้นเป็นสองเท่า", "คงความเร็วตามมาตรฐานที่สูงกว่า", "คงความเร็วตามมาตรฐานที่ต่ำกว่า", "ไม่สามารถเชื่อมต่อได้"],
+    answer: 2,
+    explanation: "อุปกรณ์จะทำงานถอยกลับไปใช้ความเร็วอ้างอิงที่อุปกรณ์ตัวที่ช้าที่สุดรองรับ (Backward Compatibility)"
+  },
+  {
+    question: "129. ข้อใดต่อไปนี้กล่าวถูกต้อง",
+    options: ["การเจรจาระหว่างโมเด็มจะติดต่อกันต่อเมื่อความเร็วลดลงเท่านั้น", "โมเด็มที่สื่อสารกัน หากมีความเร็วต่างกัน จะไม่สามารถสื่อสารร่วมกันได้", "โมเด็มมาตรฐาน V.92 มีความเร็วในส่วนของ Up Stream สูงถึง 56K", "การสื่อสารเจรจาระหว่างโมเด็ม สามารถเป็นไปได้ทั้งแบบ Fallback และ Fall Forward"],
+    answer: 3,
+    explanation: "โมเด็มสามารถปรับลดความเร็ว (Fallback) เมื่อสายไม่ดี และปรับเพิ่มความเร็วกลับขึ้นมา (Fall Forward) ได้อัตโนมัติ"
+  },
+  {
+    question: "130. สำหรับผู้ใช้งานตามบ้านเรือน สามารถมีทางเลือกด้วยการใช้งานอินเทอร์เน็ตความเร็วสูงผ่านระบบใด",
+    options: ["56K Modem", "T-1 Line", "ADSL", "Leased Line"],
+    answer: 2,
+    explanation: "ADSL เป็นเทคโนโลยีบรอดแบนด์ที่ผู้ใช้ตามบ้านเข้าถึงได้ง่ายที่สุดในยุคนั้น โดยอาศัยสายทองแดงที่มีอยู่เดิม"
+  },
+  {
+    question: "131. ย่านความถี่ของระบบ ADSL ประกอบด้วยช่วงใดบ้าง",
+    options: ["Analog, Digital และ Hybrid", "Loop, Local Loop และ Loop Back", "Voice, Upstream และ Downstream", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 2,
+    explanation: "ADSL แบ่งความถี่เป็น 3 ช่วงคือ โทรศัพท์ (Voice), อัปโหลดข้อมูล (Upstream), และดาวน์โหลดข้อมูล (Downstream)"
+  },
+  {
+    question: "132. เทคนิคการมอดูเลตในรูปแบบใดที่นำมาใช้เป็นมาตรฐานการเข้ารหัสสัญญาณ ADSL",
+    options: ["ASK", "FSK/PSK", "CAP", "DMT"],
+    answer: 3,
+    explanation: "ADSL ใช้เทคนิค Discrete Multi-Tone (DMT) ในการแบ่งแถบความถี่ช่องสัญญาณย่อยเพื่อเข้ารหัส"
+  },
+  {
+    question: "133. ADSL กับ ADSL Lite มีข้อแตกต่างกันในด้านใด",
+    options: ["ADSL Lite ไม่ต้องใช้อุปกรณ์ Splitter โดยบริษัทโทรศัพท์จะเป็นผู้ดำเนินการแทน", "ADSL Lite ใช้สาย T-1 ในการสื่อสาร", "ADSL Lite ใช้เทคนิคการมอดูเลตแบบ CAP ในขณะที่ ADSL จะใช้เทคนิค DMT", "ถูกทั้งข้อ ก. และ ค."],
+    answer: 0,
+    explanation: "ADSL Lite (G.Lite) ถูกออกแบบมาให้ผู้ใช้ติดตั้งง่ายขึ้นแบบ Plug-and-Play โดยไม่ต้องต่อ Splitter ที่บ้าน"
+  },
+  {
+    question: "134. เทคโนโลยี DSL ตามข้อใดมีอัตราความเร็วในการรับส่งข้อมูลสูงที่สุดในกลุ่ม ในขณะเดียวกันก็เชื่อมโยงบนระยะทางที่สั้นที่สุดในกลุ่ม",
+    options: ["ADSL", "SDSL", "HDSL", "VDSL"],
+    answer: 3,
+    explanation: "VDSL (Very High Bitrate DSL) ให้ความเร็วสูงสุด แต่ครอบคลุมระยะทางสั้นที่สุด"
+  },
+  {
+    question: "135. ข้อใดต่อไปนี้เกี่ยวข้องกับการมอดูเลตด้วยเทคนิค DMT",
+    options: ["มีการแบ่งช่องสัญญาณย่อยจำนวนมาก", "เป็นเทคนิคที่ลดสัญญาณรบกวนได้เป็นอย่างดี", "แต่ละช่องสัญญาณจะไม่รบกวนกัน ทำให้สามารถส่งข้อมูลได้เต็มที่", "ถูกทุกข้อ"],
+    answer: 3,
+    explanation: "DMT แบ่งแถบความถี่ออกเป็นช่องสัญญาณย่อยๆ หลายช่อง ทำให้หลีกเลี่ยงช่องที่มี Noise เยอะได้"
+  }
+];
+
+const quizContainer = document.getElementById('quiz-container');
+const resultSummary = document.getElementById('result-summary');
+const submitBtn = document.getElementById('submit-btn');
+const resetBtn = document.getElementById('reset-btn');
+
+function loadQuiz() {
+  quizContainer.innerHTML = '';
+  quizData.forEach((q, index) => {
+    const questionBlock = document.createElement('div');
+    questionBlock.className = 'question-block';
+
+    const questionTitle = document.createElement('div');
+    questionTitle.className = 'question-title';
+    questionTitle.textContent = q.question;
+    questionBlock.appendChild(questionTitle);
+
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+    q.options.forEach((opt, optIndex) => {
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'question' + index;
+      radio.value = optIndex;
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(' ' + opt));
+      if (optIndex === q.answer) {
+        label.classList.add('correct-answer');
+      }
+      optionsDiv.appendChild(label);
+    });
+    questionBlock.appendChild(optionsDiv);
+
+    const feedbackDiv = document.createElement('div');
+    feedbackDiv.className = 'feedback';
+    feedbackDiv.id = 'feedback' + index;
+    questionBlock.appendChild(feedbackDiv);
+
+    quizContainer.appendChild(questionBlock);
+  });
+}
+
+function submitQuiz() {
+  let score = 0;
+  let allAnswered = true;
+
+  quizData.forEach((q, index) => {
+    const selected = document.querySelector(`input[name="question${index}"]:checked`);
+    const feedbackDiv = document.getElementById('feedback' + index);
+
+    if (!selected) {
+      allAnswered = false;
+      return;
+    }
+
+    const selectedValue = parseInt(selected.value);
+    feedbackDiv.style.display = 'block';
+
+    if (selectedValue === q.answer) {
+      score++;
+      feedbackDiv.textContent = 'ถูกต้องครับ!';
+      feedbackDiv.className = 'feedback correct';
+    } else {
+      feedbackDiv.textContent = 'ผิดครับ - ' + q.explanation;
+      feedbackDiv.className = 'feedback incorrect';
+      const labels = document.querySelectorAll(`input[name="question${index}"]`);
+      labels.forEach(r => {
+        if (parseInt(r.value) === selectedValue) r.parentElement.classList.add('wrong-selected');
+      });
+    }
+
+    const radios = document.querySelectorAll(`input[name="question${index}"]`);
+    radios.forEach(radio => radio.disabled = true);
+  });
+
+  if (!allAnswered) {
+    alert('กรุณาตอบคำถามให้ครบทุกข้อก่อนส่งคำตอบครับ');
+    return;
+  }
+
+  resultSummary.textContent = 'คุณทำได้ ' + score + ' / ' + quizData.length + ' คะแนน';
+  submitBtn.style.display = 'none';
+  resetBtn.style.display = 'inline-block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  loadQuiz();
+  resultSummary.textContent = '';
+  submitBtn.style.display = 'inline-block';
+  resetBtn.style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+loadQuiz();
+</script>
+
+<script>
+document.querySelector('.nav-toggle').addEventListener('click', function() {
+  const nav = document.querySelector('.nav-links');
+  nav.classList.toggle('open');
+  this.classList.toggle('active');
+  this.setAttribute('aria-expanded', nav.classList.contains('open'));
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.querySelector('.nav-toggle').classList.remove('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+  });
+});
+</script>
+
+</body>
+</html>

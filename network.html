@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เฉลยข้อสอบวิชาเครือข่าย - HOKKADEE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="icons.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/hkd3.png" alt="HOKKADEE" class="nav-logo-img">
+    </a>
+    <button class="nav-toggle" aria-label="เปิดเมนู">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links">
+      <a href="index.html">หน้าแรก</a>
+      <a href="schedule.html">ตารางสอน</a>
+      <a href="homework.html">การบ้าน</a>
+      <a href="gpa.html">คำนวณเกรด</a>
+      <a href="network.html" class="active">เฉลยข้อสอบเครือข่าย</a>
+      <a href="games.html">เกมดริ้ง</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 class="section-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> เฉลยข้อสอบวิชาเครือข่าย</h1>
+  <div class="section-line"></div>
+
+  <div id="nw-subject-view">
+    <p class="hw-hint">เลือกหัวข้อเพื่อดูเฉลย</p>
+    <div class="hw-subj-grid" id="nw-subj-grid"></div>
+  </div>
+
+  <div id="nw-detail-view" style="display:none">
+    <button class="hw-back" onclick="showSubjects()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg> กลับ</button>
+    <h1 class="section-title" id="nw-detail-title"></h1>
+    <div class="section-line"></div>
+    <div id="nw-list"></div>
+  </div>
+</div>
+
+<style>
+.nw-card {
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-surface));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.nw-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px var(--shadow-accent);
+  border-color: rgba(255, 215, 0, 0.2);
+}
+.nw-q {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.nw-a {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  padding: 14px 18px;
+  background: var(--bg-surface);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+.nw-a ul, .nw-a ol {
+  margin: 8px 0 8px 20px;
+}
+.nw-a li {
+  margin-bottom: 6px;
+}
+.nw-hint {
+  text-align: center;
+  color: var(--text-muted-4);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+</style>
+
+<script>
+const examData = {
+  'พื้นฐานเครือข่าย': {
+    icon: ICONS.globe,
+    items: [
+      {
+        q: 'เครือข่าย (Network) คืออะไร?',
+        a: 'เครือข่ายคือการเชื่อมต่ออุปกรณ์คอมพิวเตอร์หรืออุปกรณ์อื่นๆ เข้าด้วยกันเพื่อวัตถุประสงค์ในการแชร์ทรัพยากร เช่น ไฟล์, อินเทอร์เน็ต, หรืออุปกรณ์ต่างๆ'
+      },
+      {
+        q: 'LAN, WAN, MAN ต่างกันอย่างไร?',
+        a: '<ul><li><strong>LAN (Local Area Network)</strong> - เครือข่ายขนาดเล็ก ครอบคลุมพื้นที่จำกัด เช่น อาคาร, สำนักงาน</li><li><strong>MAN (Metropolitan Area Network)</strong> - เครือข่ายขนาดกลาง ครอบคลุมเมืองหรือเขตพื้นที่ขนาดใหญ่</li><li><strong>WAN (Wide Area Network)</strong> - เครือข่ายขนาดใหญ่ ครอบคลุมพื้นที่กว้าง เช่น ประเทศหรือทั่วโลก (อินเทอร์เน็ตเป็นตัวอย่างของ WAN)</li></ul>'
+      },
+      {
+        q: 'Topology ของเครือข่ายมีอะไรบ้าง?',
+        a: '<ul><li><strong>Bus</strong> - ทุกอุปกรณ์เชื่อมต่อกับสายเคเบิลเส้นเดียว</li><li><strong>Star</strong> - ทุกอุปกรณ์เชื่อมต่อกับ Hub/Switch ตรงกลาง</li><li><strong>Ring</strong> - อุปกรณ์เชื่อมต่อกันเป็นวงจร</li><li><strong>Mesh</strong> - ทุกอุปกรณ์เชื่อมต่อกันทุกจุด</li><li><strong>Tree</strong> - .combine ของ Star topology</li></ul>'
+      },
+      {
+        q: 'Bandwidth และ Throughput ต่างกันอย่างไร?',
+        a: '<ul><li><strong>Bandwidth</strong> = ความจุสูงสุดของช่องสัญญาณที่สามารถส่งข้อมูลได้ (หน่วย: Mbps, Gbps)</li><li><strong>Throughput</strong> = ความเร็วจริงในการส่งข้อมูลในปัจจุบัน ซึ่งมักจะน้อยกว่า Bandwidth เนื่องจากปัจจัยต่างๆ เช่น สัญญาณรบกวน, จำนวนผู้ใช้</li></ul>'
+      }
+    ]
+  },
+  'โมเดล OSI': {
+    icon: ICONS.layers,
+    items: [
+      {
+        q: 'โมเดล OSI มีกี่ชั้น อะไรบ้าง?',
+        a: 'โมเดล OSI มี 7 ชั้น (Layer) จากล่างขึ้นบน:<ol><li><strong>Physical</strong> - การส่งผ่านสัญญาณไฟฟ้า/แสง</li><li><strong>Data Link</strong> - การส่งข้อมูลระหว่างโหนดที่อยู่ติดกัน</li><li><strong>Network</strong> - การกำหนดเส้นทางข้อมูล (Routing)</li><li><strong>Transport</strong> - การส่งข้อมูลที่เชื่อถือได้ (TCP/UDP)</li><li><strong>Session</strong> - การจัดการการเชื่อมต่อระหว่างแอปพลิเคชัน</li><li><strong>Presentation</strong> - การแปลงรูปแบบข้อมูล</li><li><strong>Application</strong> - แอปพลิเคชันที่ผู้ใช้ใช้งาน (HTTP, FTP, SMTP)</li></ol>'
+      },
+      {
+        q: 'TCP และ UDP ต่างกันอย่างไร?',
+        a: '<ul><li><strong>TCP (Transmission Control Protocol)</strong> - เชื่อถือได้, มีการรับรองการส่ง (acknowledgment), ตรวจสอบความถูกต้อง, ใช้ในเว็บ, อีเมล</li><li><strong>UDP (User Datagram Protocol)</strong> - เร็วกว่า, ไม่รับรองการส่ง, ใช้ในวิดีโอสตรีมมิ่ง, เกมออนไลน์, VoIP</li></ul>'
+      },
+      {
+        q: 'Mac Address คืออะไร? ต่างกับ IP Address อย่างไร?',
+        a: '<ul><li><strong>MAC Address</strong> - ที่อยู่ฮาร์ดแวร์ที่ฝังอยู่ใน Network Interface Card (NIC) ยาว 48 บิต (เช่น 00:1A:2B:3C:4D:5E) ใช้ในชั้น Data Link</li><li><strong>IP Address</strong> - ที่อยู่ตรรกะที่กำหนดให้กับอุปกรณ์ในเครือข่าย (เช่น 192.168.1.1) ใช้ในชั้น Network</li></ul>'
+      }
+    ]
+  },
+  'IP Address & Subnet': {
+    icon: ICONS.clipboard,
+    items: [
+      {
+        q: 'IP Address คืออะไร? มีกี่คลาส?',
+        a: 'IP Address คือที่อยู่ของอุปกรณ์ในเครือข่าย มี 5 คลาส:<ul><li><strong>Class A</strong> : 1.0.0.0 - 126.255.255.255 (Network 8 บิต, Host 24 บิต)</li><li><strong>Class B</strong> : 128.0.0.0 - 191.255.255.255 (Network 16 บิต, Host 16 บิต)</li><li><strong>Class C</strong> : 192.0.0.0 - 223.255.255.255 (Network 24 บิต, Host 8 บิต)</li><li><strong>Class D</strong> : 224.0.0.0 - 239.255.255.255 (Multicast)</li><li><strong>Class E</strong> : 240.0.0.0 - 255.255.255.255 (Experimental)</li></ul>'
+      },
+      {
+        q: 'Private IP Address มีอะไรบ้าง?',
+        a: 'Private IP คือ IP ที่ใช้ภายในเครือข่ายท้องถิ่น ไม่สามารถเชื่อมต่ออินเทอร์เน็ตได้โดยตรง:<ul><li><strong>Class A</strong>: 10.0.0.0 - 10.255.255.255 (1 เครือข่าย, 16.7 ล้าน hosts)</li><li><strong>Class B</strong>: 172.16.0.0 - 172.31.255.255 (16 เครือข่าย, 1 ล้าน hosts)</li><li><strong>Class C</strong>: 192.168.0.0 - 192.168.255.255 (256 เครือข่าย, 65,000 hosts)</li></ul>'
+      },
+      {
+        q: 'Subnet Mask คืออะไร? คำนวณอย่างไร?',
+        a: 'Subnet Mask ใช้แบ่ง IP Address ออกเป็นส่วน Network และส่วน Host<br><br>ตัวอย่าง: IP 192.168.1.100/24 (Subnet Mask: 255.255.255.0)<ul><li>Network portion: 192.168.1.0</li><li>Host portion: .100</li><li>จำนวน hosts ที่ใช้ได้: 2^8 - 2 = 254 (ลบ network address และ broadcast address)</li></ul><br>Subnet ที่พบบ่อย:<ul><li>/24 = 255.255.255.0 = 254 hosts</li><li>/16 = 255.255.0.0 = 65,534 hosts</li><li>/8 = 255.0.0.0 = 16,777,214 hosts</li></ul>'
+      }
+    ]
+  },
+  'อุปกรณ์เครือข่าย': {
+    icon: ICONS.monitor,
+    items: [
+      {
+        q: 'Router, Switch, Hub ต่างกันอย่างไร?',
+        a: '<ul><li><strong>Hub</strong> - อุปกรณ์ชั้น Physical ส่งข้อมูลไปทุกพอร์ตโดยไม่สนใจจุดหมาย ทำงานแบบ broadcast</li><li><strong>Switch</strong> - อุปกรณ์ชั้น Data Link จดจำ MAC Address แล้วส่งข้อมูลเฉพาะพอร์ตที่ต้องการ ทำงานแบบ unicast</li><li><strong>Router</strong> - อุปกรณ์ชั้น Network กำหนดเส้นทางข้อมูลระหว่างเครือข่ายต่างๆ ใช้ IP Address ในการตัดสินใจ</li></ul>'
+      },
+      {
+        q: 'Access Point (AP) คืออะไร?',
+        a: 'Access Point คืออุปกรณ์ที่ให้บริการ Wi-Fi เชื่อมต่ออุปกรณ์ไร้สายเข้ากับเครือข่ายมีสาย (LAN) ทำหน้าที่เป็นจุดเชื่อมต่อระหว่าง Wireless กับ Wired network'
+      },
+      {
+        q: 'Firewall คืออะไร?',
+        a: 'Firewall คือระบบความปลอดภัยที่ตรวจสอบและควบคุมการรับ-ส่งข้อมูลระหว่างเครือข่ายภายในและภายนอก สามารถทำงานได้ทั้งแบบ Hardware และ Software โดย Rules ที่กำหนดไว้'
+      }
+    ]
+  },
+  'โปรโตคอล & บริการ': {
+    icon: ICONS.zap,
+    items: [
+      {
+        q: 'HTTP, HTTPS, FTP, SMTP, DNS คืออะไร?',
+        a: '<ul><li><strong>HTTP</strong> (Port 80) - โปรโตคอลสำหรับเว็บ ไม่เข้ารหัส</li><li><strong>HTTPS</strong> (Port 443) - HTTP ที่เข้ารหัสด้วย SSL/TLS</li><li><strong>FTP</strong> (Port 20/21) - โอนถ่ายไฟล์</li><li><strong>SMTP</strong> (Port 25/587) - ส่งอีเมล</li><li><strong>DNS</strong> (Port 53) - แปลงชื่อโดเมนเป็น IP Address</li></ul>'
+      },
+      {
+        q: 'DNS ทำงานอย่างไร?',
+        a: 'DNS (Domain Name System) ทำหน้าที่แปลงชื่อโดเมน (เช่น www.google.com) เป็น IP Address:<ol><li>ผู้ใช้พิมพ์ชื่อโดเมนในเบราว์เซอร์</li><li>ถาม Local DNS Cache ก่อน</li><li>ถ้าไม่มี ถาม DNS Resolver</li><li>DNS Resolver ถาม Root DNS Server</li><li>Root DNS ชี้ไปที่ TLD Server (.com, .th)</li><li>TLD Server ชี้ไปที่ authoritative DNS Server</li><li>ได้ IP Address แล้วส่งกลับไปให้ผู้ใช้</li></ol>'
+      },
+      {
+        q: 'NAT คืออะไร?',
+        a: 'NAT (Network Address Translation) คือเทคนิคที่แปลง IP Address จาก Private IP เป็น Public IP เพื่อให้อุปกรณ์ภายในเครือข่ายสามารถเชื่อมต่ออินเทอร์เน็ตได้ ทำให้ใช้ IP Address สาธารณะน้อยลง ช่วยประหยัด IPv4 address pool'
+      }
+    ]
+  },
+  'ความปลอดภัยเครือข่าย': {
+    icon: ICONS.alertCircle,
+    items: [
+      {
+        q: 'DoS และ DDoS ต่างกันอย่างไร?',
+        a: '<ul><li><strong>DoS (Denial of Service)</strong> - การโจมตีจากแหล่งเดียว เพื่อทำให้ระบบไม่สามารถให้บริการได้ตามปกติ</li><li><strong>DDoS (Distributed Denial of Service)</strong> - การโจมตีจากหลายแหล่งพร้อมกัน (Botnet) ทำให้ยากต่อการป้องกัน</li></ul>'
+      },
+      {
+        q: 'VPN คืออะไร?',
+        a: 'VPN (Virtual Private Network) คือเทคโนโลยีที่สร้างอุโมงค์เชื่อมต่อที่เข้ารหัสผ่านเครือข่ายสาธารณะ (อินเทอร์เน็ต) ทำให้ผู้ใช้สามารถเชื่อมต่อกับเครือข่ายภายในองค์กรได้อย่างปลอดภัย เหมือนนั่งอยู่ในสำนักงาน'
+      },
+      {
+        q: 'SSL/TLS คืออะไร?',
+        a: '<ul><li><strong>SSL (Secure Sockets Layer)</strong> - โปรโตคอลความปลอดภัยรุ่นเก่า (ไม่แนะนำให้ใช้แล้ว)</li><li><strong>TLS (Transport Layer Security)</strong> - รุ่นปรับปรุงจาก SSL ใช้เข้ารหัสข้อมูลระหว่างการส่ง</li><li>ปัจจุบัน HTTPS ใช้ TLS ในการเข้ารหัสข้อมูลระหว่างเบราว์เซอร์กับเว็บเซิร์ฟเวอร์</li></ul>'
+      }
+    ]
+  }
+};
+
+const subjectIcons = {
+  'พื้นฐานเครือข่าย': ICONS.globe,
+  'โมเดล OSI': ICONS.layers || ICONS.clipboard,
+  'IP Address & Subnet': ICONS.clipboard,
+  'อุปกรณ์เครือข่าย': ICONS.monitor,
+  'โปรโตคอล & บริการ': ICONS.zap,
+  'ความปลอดภัยเครือข่าย': ICONS.alertCircle,
+};
+
+function showSubjects() {
+  document.getElementById('nw-subject-view').style.display = 'block';
+  document.getElementById('nw-detail-view').style.display = 'none';
+  renderSubjects();
+}
+
+function showDetail(subject) {
+  document.getElementById('nw-subject-view').style.display = 'none';
+  document.getElementById('nw-detail-view').style.display = 'block';
+  document.getElementById('nw-detail-title').textContent = subject;
+  renderDetail(subject);
+}
+
+function renderSubjects() {
+  const grid = document.getElementById('nw-subj-grid');
+  grid.innerHTML = Object.keys(examData).map(s => {
+    const data = examData[s];
+    return `
+      <div class="hw-subj-btn" onclick="showDetail('${s}')">
+        <div class="hw-subj-icon">${data.icon}</div>
+        <div class="hw-subj-name">${s}</div>
+        <div class="hw-subj-count">${data.items.length} ข้อ</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderDetail(subject) {
+  const data = examData[subject];
+  const list = document.getElementById('nw-list');
+  list.innerHTML = data.items.map(item => `
+    <div class="nw-card">
+      <div class="nw-q">Q: ${item.q}</div>
+      <div class="nw-a">${item.a}</div>
+    </div>
+  `).join('');
+}
+
+renderSubjects();
+</script>
+
+<script>
+document.querySelector('.nav-toggle').addEventListener('click', function() {
+  const nav = document.querySelector('.nav-links');
+  nav.classList.toggle('open');
+  this.classList.toggle('active');
+  this.setAttribute('aria-expanded', nav.classList.contains('open'));
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('open');
+    document.querySelector('.nav-toggle').classList.remove('active');
+    document.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+  });
+});
+
+localStorage.removeItem('theme');
+</script>
+
+<script src="main.js"></script>
+</body>
+</html>
